@@ -18,7 +18,7 @@
 
 <body class="frame grad_bg" style="">
 	<div class="header header_bottom frame grad_bg" style="">
-		<div class="logo_container"><a class="logo"><img class="logo__img" src="./home/CryptoNut_Logo_2.png" width="242" height="70" alt="CryptoNut Currency Sim"><span class="logo__name"></span></a></div>
+		<div class="logo_container"><a class="logo" onclick="openTab('Home', this, 'red')" id="home_btn"><img class="logo__img" src="./home/CryptoNut_Logo_2.png" width="242" height="70" alt="CryptoNut Currency Sim"><span class="logo__name"></span></a></div>
 
 		<div class="header_right">
 
@@ -26,7 +26,50 @@
 			<button class="tab_button" onclick="openTab('Challenges', this, 'red')" id="challenges_btn"><span class="hide_1">CHALLENGES</span></button>
 			<button class="tab_button" onclick="openTab('Achievements', this, 'red')" id="achievements_btn"><span class="hide_1">ACHIEVEMENTS</span></button>
 			<button class="tab_button" onclick="openTab('Profile', this, 'red')" id="profile_btn"><span class="hide_1">PROFILE</span></button>
-			<a class="button button_blue button_med" style="margin-right:20px;" onclick="openTab('Sign', this, 'red')" id="signin_btn"><img class="button__img" src="./home/sign_in.svg" width="12" height="15" ><span class="hide_1">SIGN IN</span></a>
+
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
+			<!---------------------------- SIGN IN POPUP  ------------------------------>
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
+
+			<div class="menu_container">
+				<!-- SIGN IN ICON -->
+				<div class="nav">
+					<input class="nav_toggle" id="sign_toggle" type="checkbox"><label for="sign_toggle" class="button button_blue button_med" style="margin-right:20px;">
+							<img class="button__img" src="./home/sign_in.svg" width="12" height="15" >SIGN IN</label>
+
+					<div class="nav_menu">
+						<div class="nav_content">
+							<!-- X ICON -->
+							<label for="sign_toggle" class="nav_cross"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><g fill="none" stroke-linecap="round" stroke-width="2" stroke-miterlimit="10" shape-rendering="crispEdges"><path d="m1 14l13-13"></path><path d="m1 1l13 13"></path></g></svg></label>
+							<form method="post" action="">
+
+								<div class="nav_form_group">
+									<label class="nav_label" for="base_currency">Username</label><input class="nav_select"></input>
+									<label style="margin-top:10px;" class="nav_label" for="base_currency">Password</label><input type="password" class="nav_select"></input>
+								</div>
+
+								<div class="nav_footer">
+									<a class="nav_button button button_blue button_full button_med" href=""><img class="button__img" src="./index_files/exchange.svg" width="10" height="13" alt="">
+									SIGN IN
+									</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
+			<!-------------------------- BASE CURRENCY POPUP --------------------------->
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
+			<!-------------------------------------------------------------------------->
 
 			<div class="menu_container">
 				<!-- MENU ICON -->
@@ -41,9 +84,7 @@
 										CHANGE CURRENCY
 									</a></div>
 							</form>
-
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -52,13 +93,22 @@
 
 	</div>
 
-
+	<!-------------------------------------------------------------------------->
+	<!-------------------------------------------------------------------------->
+	<!-------------------------------------------------------------------------->
+	<!------------------------------ COINS SIDE VIEW --------------------------->
+	<!-------------------------------------------------------------------------->
+	<!-------------------------------------------------------------------------->
+	<!-------------------------------------------------------------------------->
 	<div style="display: flex; flex: 1;">
 		<div class="left-bar">
 			<div class="left-sidebar-container">
 				<div class="body" id="sidebar">
 
-					<a class="button button_nut button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('Trade', this, 'red')" id="signin_btn"><img class="exchange_button__img button__img" src="./home/exchange_icon_white.svg" width="12" height="15" ><span class="hide_1">TRADE</span></a>
+					<a class="button button_nut button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('Trade', this, 'red')" id="signin_btn">
+						<img class="exchange_button__img button__img" src="./home/exchange_icon_white.svg" width="12" height="15" >
+						TRADE
+					</a>
 
 					<div class="all-coins-block">
 						<div class="search-bar overflow-hide">
@@ -85,7 +135,7 @@
 											<p class="text-uppercase">BTC</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="11674">
 											<p class="increment">$11690.0000</p>
 										</div>
@@ -110,7 +160,7 @@
 											<p class="text-uppercase">ETH</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="858.76">
 											<p class="decrement">$858.8520</p>
 										</div>
@@ -135,7 +185,7 @@
 											<p class="text-uppercase">XRP</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="0.9907">
 											<p class="increment">$0.9848</p>
 										</div>
@@ -160,7 +210,7 @@
 											<p class="text-uppercase">BTC</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="11674">
 											<p class="increment">$11690.0000</p>
 										</div>
@@ -185,7 +235,7 @@
 											<p class="text-uppercase">ETH</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="858.76">
 											<p class="decrement">$858.8520</p>
 										</div>
@@ -210,7 +260,7 @@
 											<p class="text-uppercase">XRP</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="0.9907">
 											<p class="increment">$0.9848</p>
 										</div>
@@ -235,7 +285,7 @@
 											<p class="text-uppercase">BTC</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="11674">
 											<p class="increment">$11690.0000</p>
 										</div>
@@ -260,7 +310,7 @@
 											<p class="text-uppercase">ETH</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="858.76">
 											<p class="decrement">$858.8520</p>
 										</div>
@@ -285,7 +335,7 @@
 											<p class="text-uppercase">XRP</p>
 										</div>
 									</td>
-									<td >
+									<td>
 										<div class="coin-price" data-p="0.9907">
 											<p class="increment">$0.9848</p>
 										</div>
@@ -314,10 +364,11 @@
 		<!-------------------------------------------------------------------------->
 		<!-------------------------------------------------------------------------->
 
-		<div style="width:100%;" class="tabcontent grad_bg panel middle-content" id="Sign">
+		<div style="width:100%;" class="tabcontent grad_bg panel middle-content" id="SignIn">
 			<div style="width: 100%;">
 				<div class="text_box_container_1">
 					<h1>Cryptocurrency Exchange Simulator</h1>
+					<h2>Sign In</h2>
 					<form>
 
 						<span class="glow_text_form_label">Username</span>
@@ -333,6 +384,58 @@
 
 					<p><span style="color:#ff6634">Register</span> right now to start trading.</p>
 				</div>
+			</div>
+		</div>
+
+		<!-------------------------------------------------------------------------->
+		<!-------------------------------------------------------------------------->
+		<!-------------------------------------------------------------------------->
+		<!------------------------------ HOME VIEW -------------------------------->
+		<!-------------------------------------------------------------------------->
+		<!-------------------------------------------------------------------------->
+		<!-------------------------------------------------------------------------->
+
+		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="Home">
+			<div class="home_container">
+				<div class="home-header">
+
+					<h4>Welcome to CryptoNut</h4>
+					<h1>Cryptocurrency<br>Exchange Simulator</h1>
+					<span class="description">Signup and start trading cryptocurrencies with virtual money. Get a virtual wallet to buy any popular coin.</span>
+					<div class="auth">
+						<a class="button button_green button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('Trade', this, 'red')" id="signin_btn">
+							<img class="exchange_button__img button__img" src="./home/sign_in.svg" width="12" height="15" >
+							SIGN UP
+						</a> Or
+						<a class="button button_blue button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('SignIn', this, 'red')" id="signin_btn">
+	 						<img class="exchange_button__img button__img" src="./home/sign_in.svg" width="12" height="15" >
+	 						SIGN IN
+	 					</a>
+					</div>
+
+				</div>
+
+
+				<div class="feature-list">
+					<div class="feature-card">
+						<img src="./CryptoGround - Cryptocurrency Virtual Exchange And Infopedia_files/Realtime_Prices.svg">
+						<h2>Realtime Prices</h2>
+						<span>
+            Track and buy top cryptocurrencies at realtime prices.
+        </span>
+					</div>
+					<div class="feature-card">
+						<img src="./CryptoGround - Cryptocurrency Virtual Exchange And Infopedia_files/Historical_Data.svg">
+						<h2>Virtual Wallet</h2>
+						<span>Receive a virtual wallet with containing starting money to buy cryptocurrencies and then trade them.</span>
+					</div>
+					<div class="feature-card">
+						<img src="./CryptoGround - Cryptocurrency Virtual Exchange And Infopedia_files/Modern_Interface.svg">
+						<h2>Challenges & Achievements</h2>
+						<span>Complete weekly challenges and unlock achievements to gain rewards. These rewards can help you increase your wealth in your wallet.</span>
+					</div>
+				</div>
+
 			</div>
 		</div>
 
@@ -420,7 +523,7 @@
 		<!-------------------------------------------------------------------------->
 		<!-------------------------------------------------------------------------->
 
-		<div class="tabcontent grad_bg panel" style="width:100%;" id="Achievements">
+		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="Achievements">
 			<table id="t01">
 				<tr>
 					<th>ACHIEVEMENTS</th>
@@ -453,8 +556,7 @@
 					<div class="align-center">
 						<div class="pagination"><a class="button button_disabled pagination__button">
 							<img class="pagination__prev" src="./index_files/prev.svg" width="8" height="13" alt="Previous page"></a><span class="pagination__info">Page <b>1</b> of <b>1</b></span>
-							<a class="button button_nut pagination__button"
-							  href=""><img class="pagination__next" src="./index_files/next.svg" width="8" height="13" alt="Next page"></a></div>
+							<a class="button button_nut pagination__button" href=""><img class="pagination__next" src="./index_files/next.svg" width="8" height="13" alt="Next page"></a></div>
 					</div>
 				</div>
 			</div>
@@ -496,8 +598,7 @@
 					<div class="align-center">
 						<div class="pagination"><a class="button button_disabled pagination__button">
 							<img class="pagination__prev" src="./index_files/prev.svg" width="8" height="13" alt="Previous page"></a><span class="pagination__info">Page <b>1</b> of <b>1</b></span>
-							<a class="button button_nut pagination__button"
-							  href=""><img class="pagination__next" src="./index_files/next.svg" width="8" height="13" alt="Next page"></a></div>
+							<a class="button button_nut pagination__button" href=""><img class="pagination__next" src="./index_files/next.svg" width="8" height="13" alt="Next page"></a></div>
 					</div>
 				</div>
 			</div>
@@ -901,7 +1002,7 @@
 			elmnt.focus();
 		}
 
-		$("#signin_btn")[0].click();
+		$("#home_btn")[0].click();
 
 		$(document).ready(function() {
 			$('table tr').click(function() {
@@ -912,6 +1013,7 @@
 			});
 		});
 	</script>
+	<script src="main.js"></script>
 
 </body>
 
