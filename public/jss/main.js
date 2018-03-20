@@ -1,18 +1,9 @@
-const request = require('request')
-
-
-
 function getCollection(callback) {
 
-  let args = {
-    url: "https://api.coinmarketcap.com/v1/ticker/"
-  };
-
-  request.get(args, function (err, res, body){
-    data = JSON.parse(body)
-    callback(data);
-
-  });
+  axios.get("https://api.coinmarketcap.com/v1/ticker/")
+    .then(res => {
+      callback(res.data);
+    });
 }
 
 function getSortedCollection(callback) {
@@ -20,13 +11,12 @@ function getSortedCollection(callback) {
     url: "https://api.coinmarketcap.com/v1/ticker/"
   };
 
-  request.get(args, function (err, res, body){
-    data = JSON.parse(body)
-    callback(data.sort(function(a, b){
-      return a.name.localeCompare(b.name);
-    }));
-
-  });
+  axios.get("https://api.coinmarketcap.com/v1/ticker/")
+    .then(res => {
+      callback(res.data.sort(function(a, b){
+        return a.name.localeCompare(b.name);
+      }));
+    });
 }
 
 // use the following to test your functions

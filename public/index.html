@@ -5,15 +5,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>CryptoNut - Cryptocurrency Simulator</title>
 	<meta name="description" content="CryptoNut &amp;#9989; A Simulator to practice trading cryptocurrencies">
+
 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+
 	<link rel="dns-prefetch" href="https://fonts.gstatic.com/">
 	<link rel="shortcut icon" type="image/png" href="./home/CryptoNut_Logo.png">
 	<link href="./css/css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./css/index.css">
 	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0">
-	<meta name="format-detection" content="telephone=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<style></style>
 </head>
 
 <body class="frame grad_bg" style="">
@@ -119,236 +123,7 @@
 						</div>
 
 						<table class="table coins-table" id="all_coins">
-							<tbody>
 
-								<tr data-key="BTC" data-name="bitcoin" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/btc.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a style="color: #5ad6ad" href="">
-												<p data-abbr="BTC">Bitcoin</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">BTC</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="11674">
-											<p class="increment">$11690.0000</p>
-										</div>
-										<div class="coin-price">
-											<p class="increment">+2.31%</p>
-										</div>
-									</td>
-									<td><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="ETH" data-name="ethereum" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/eth.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="ETH">Ethereum</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">ETH</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="858.76">
-											<p class="decrement">$858.8520</p>
-										</div>
-										<div class="coin-price">
-											<p class="decrement">-0.81%</p>
-										</div>
-									</td>
-									<td class="star   require-auth " data-id="81"><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="XRP" data-name="ripple" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/xrp.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="XRP">Ripple</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">XRP</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="0.9907">
-											<p class="increment">$0.9848</p>
-										</div>
-										<div class="coin-price">
-											<p class="increment">+3.31%</p>
-										</div>
-									</td>
-									<td class="star   require-auth " data-id="274"><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="BTC" data-name="bitcoin" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/btc.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="BTC">Bitcoin</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">BTC</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="11674">
-											<p class="increment">$11690.0000</p>
-										</div>
-										<div class="coin-price">
-											<p class="increment">+2.31%</p>
-										</div>
-									</td>
-									<td><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="ETH" data-name="ethereum" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/eth.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="ETH">Ethereum</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">ETH</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="858.76">
-											<p class="decrement">$858.8520</p>
-										</div>
-										<div class="coin-price">
-											<p class="decrement">-0.81%</p>
-										</div>
-									</td>
-									<td class="star   require-auth " data-id="81"><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="XRP" data-name="ripple" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/xrp.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="XRP">Ripple</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">XRP</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="0.9907">
-											<p class="increment">$0.9848</p>
-										</div>
-										<div class="coin-price">
-											<p class="increment">+3.31%</p>
-										</div>
-									</td>
-									<td class="star   require-auth " data-id="274"><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="BTC" data-name="bitcoin" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/btc.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="BTC">Bitcoin</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">BTC</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="11674">
-											<p class="increment">$11690.0000</p>
-										</div>
-										<div class="coin-price">
-											<p class="increment">+2.31%</p>
-										</div>
-									</td>
-									<td><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="ETH" data-name="ethereum" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/eth.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="ETH">Ethereum</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">ETH</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="858.76">
-											<p class="decrement">$858.8520</p>
-										</div>
-										<div class="coin-price">
-											<p class="decrement">-0.81%</p>
-										</div>
-									</td>
-									<td class="star   require-auth " data-id="81"><i class="fa  fa-star "></i></td>
-								</tr>
-
-								<tr data-key="XRP" data-name="ripple" class="">
-									<td>
-										<div class="coin-logo"><img src="./index_files/xrp.svg"></div>
-									</td>
-									<td>
-										<div class="coin-name">
-											<a class="btn-link" style="color: #5ad6ad" href="">
-												<p class="text-capitalize" data-abbr="XRP">Ripple</p>
-											</a>
-										</div>
-										<div class="coin-abb">
-											<p class="text-uppercase">XRP</p>
-										</div>
-									</td>
-									<td>
-										<div class="coin-price" data-p="0.9907">
-											<p class="increment">$0.9848</p>
-										</div>
-										<div class="coin-price">
-											<p class="increment">+3.31%</p>
-										</div>
-									</td>
-									<td class="star   require-auth " data-id="274"><i class="fa  fa-star "></i></td>
-								</tr>
-
-
-
-							</tbody>
 						</table>
 					</div>
 
@@ -418,19 +193,19 @@
 
 				<div class="feature-list">
 					<div class="feature-card">
-						<img src="./CryptoGround - Cryptocurrency Virtual Exchange And Infopedia_files/Realtime_Prices.svg">
+						<img src="">
 						<h2>Realtime Prices</h2>
 						<span>
             Track and buy top cryptocurrencies at realtime prices.
         </span>
 					</div>
 					<div class="feature-card">
-						<img src="./CryptoGround - Cryptocurrency Virtual Exchange And Infopedia_files/Historical_Data.svg">
+						<img src="">
 						<h2>Virtual Wallet</h2>
 						<span>Receive a virtual wallet with containing starting money to buy cryptocurrencies and then trade them.</span>
 					</div>
 					<div class="feature-card">
-						<img src="./CryptoGround - Cryptocurrency Virtual Exchange And Infopedia_files/Modern_Interface.svg">
+						<img src="">
 						<h2>Challenges & Achievements</h2>
 						<span>Complete weekly challenges and unlock achievements to gain rewards. These rewards can help you increase your wealth in your wallet.</span>
 					</div>
@@ -1013,7 +788,8 @@
 			});
 		});
 	</script>
-	<script src="main.js"></script>
+	<script src="./jss/coins.js"></script>
+	<script src="./jss/main.js"></script>
 
 </body>
 
