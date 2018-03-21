@@ -299,6 +299,7 @@ a:active:focus {
   color: #565b68;
   font-size: 15px;
   width: 100%;
+  font-weight: bold;
   text-overflow: ellipsis;
   overflow: hidden;
   background-color: #fff;
@@ -310,7 +311,7 @@ a:active:focus {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background-image: url(../img/carret.svg);
+  background-image: url(../index_files/carret.svg);
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 13px 8px;
@@ -328,6 +329,14 @@ a:active:focus {
 .nav_select:focus {
   outline: 0;
   border-color: #3cd483
+}
+
+.coin_select {
+  padding: 10px 10px 10px 0px;
+  height: 60px;
+  width: 100px;
+  margin: 0px;
+  border: 0px;
 }
 
 .nav_footer {
@@ -946,9 +955,7 @@ ul a, ul a:focus, ul a:hover {
 }
 
 .glow_text_box {
-  border-radius: 3px;
   background-color: rgb(255, 255, 255);
-  box-shadow: rgb(202, 215, 223) 0px 3px 13px 0px;
   display: flex;
   align-items: stretch;
   position: relative;
@@ -957,13 +964,14 @@ ul a, ul a:focus, ul a:hover {
 
 .glow_text_box>input {
   font-size: 16px;
+  font-weight: normal;
+  letter-spacing: 0.03em;
+  border: 0px solid #fff;
   padding: 15px 23px 20px;
-  border-radius: 3px 0px 0px 3px;
   color: rgb(95, 109, 133);
   background-color: rgb(255, 255, 255);
   width: 100%;
   min-width: 20px;
-  box-shadow: unset;
   border-right: 1px solid rgb(211, 218, 231);
   margin: 0px;
 }
@@ -974,7 +982,7 @@ ul a, ul a:focus, ul a:hover {
   align-items: flex-end;
   margin-bottom: 20px;
   flex-grow: 1;
-  font-size: 13px;
+  font-size: 18px;
   letter-spacing: 0.03em;
   color: rgb(161, 174, 197);
   font-weight: normal;
@@ -991,21 +999,7 @@ ul a, ul a:focus, ul a:hover {
 }
 
 .coin_drop_down_menu {
-  font-size: 11px;
-  font-weight: bold;
-  color: rgb(95, 109, 133);
-  border-radius: 0px 3px 3px 0px;
-  background-color: rgb(255, 255, 255);
-  width: 155px;
-  padding: 13px 15px 14px 18px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: url("../index_files/carret.svg");
-  background-size: 12px 8px;
-  background-repeat: no-repeat;
-  background-position: calc(100% - 14px) calc(50% - 2px);
+
 }
 
 ::-webkit-scrollbar {
@@ -1070,6 +1064,7 @@ ul a, ul a:focus, ul a:hover {
 
 .home_container .feature-list {
   padding: 10px 50px 70px;
+  margin-bottom: 40px;
   background: #353535;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;

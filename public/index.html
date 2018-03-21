@@ -83,7 +83,11 @@
 						<!-- X ICON -->
 						<div class="nav_content"><label for="menu-toggle" class="nav_cross"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><g fill="none" stroke-linecap="round" stroke-width="2" stroke-miterlimit="10" shape-rendering="crispEdges"><path d="m1 14l13-13"></path><path d="m1 1l13 13"></path></g></svg></label>
 							<form method="post" action="">
-								<div class="nav_form_group"><label class="nav_label" for="base_currency">Base currency</label><select name="base_currency" id="base_currency" class="nav_select" data-action="change-base-currency"><option value="USD" selected="selected">USD - US dollar</option><option value="EUR">EUR - Euro</option><option value="JPY">JPY - Japanese yen</option><option value="BGN">BGN - Bulgarian lev</option><option value="CZK">CZK - Czech koruna</option><option value="DKK">DKK - Danish krone</option><option value="GBP">GBP - Pound sterling</option><option value="HUF">HUF - Hungarian forint</option><option value="PLN">PLN - Polish zloty</option><option value="RON">RON - Romanian leu</option><option value="SEK">SEK - Swedish krona</option><option value="CHF">CHF - Swiss franc</option><option value="NOK">NOK - Norwegian krone</option><option value="HRK">HRK - Croatian kuna</option><option value="RUB">RUB - Russian rouble</option><option value="TRY">TRY - Turkish lira</option><option value="AUD">AUD - Australian dollar</option><option value="BRL">BRL - Brazilian real</option><option value="CAD">CAD - Canadian dollar</option><option value="CNY">CNY - Chinese yuan renminbi</option><option value="HKD">HKD - Hong Kong dollar</option><option value="IDR">IDR - Indonesian rupiah</option><option value="ILS">ILS - Israeli shekel</option><option value="INR">INR - Indian rupee</option><option value="KRW">KRW - South Korean won</option><option value="MXN">MXN - Mexican peso</option><option value="MYR">MYR - Malaysian ringgit</option><option value="NZD">NZD - New Zealand dollar</option><option value="PHP">PHP - Philippine peso</option><option value="SGD">SGD - Singapore dollar</option><option value="THB">THB - Thai baht</option><option value="ZAR">ZAR - South African rand</option><option value="BTC">BTC - Bitcoin</option><option value="ETH">ETH - Ethereum</option></select></div>
+								<div class="nav_form_group"><label class="nav_label" for="base_currency">Base currency</label>
+									<select name="base_currency" id="base_currency" class="nav_select" data-action="change-base-currency">
+										<option value="USD" selected="selected">USD - US dollar</option><option value="EUR">EUR - Euro</option><option value="JPY">JPY - Japanese yen</option><option value="BGN">BGN - Bulgarian lev</option><option value="CZK">CZK - Czech koruna</option><option value="DKK">DKK - Danish krone</option><option value="GBP">GBP - Pound sterling</option><option value="HUF">HUF - Hungarian forint</option><option value="PLN">PLN - Polish zloty</option><option value="RON">RON - Romanian leu</option><option value="SEK">SEK - Swedish krona</option><option value="CHF">CHF - Swiss franc</option><option value="NOK">NOK - Norwegian krone</option><option value="HRK">HRK - Croatian kuna</option><option value="RUB">RUB - Russian rouble</option><option value="TRY">TRY - Turkish lira</option><option value="AUD">AUD - Australian dollar</option><option value="BRL">BRL - Brazilian real</option><option value="CAD">CAD - Canadian dollar</option><option value="CNY">CNY - Chinese yuan renminbi</option><option value="HKD">HKD - Hong Kong dollar</option><option value="IDR">IDR - Indonesian rupiah</option><option value="ILS">ILS - Israeli shekel</option><option value="INR">INR - Indian rupee</option><option value="KRW">KRW - South Korean won</option><option value="MXN">MXN - Mexican peso</option><option value="MYR">MYR - Malaysian ringgit</option><option value="NZD">NZD - New Zealand dollar</option><option value="PHP">PHP - Philippine peso</option><option value="SGD">SGD - Singapore dollar</option><option value="THB">THB - Thai baht</option><option value="ZAR">ZAR - South African rand</option><option value="BTC">BTC - Bitcoin</option><option value="ETH">ETH - Ethereum</option>
+									</select>
+								</div>
 								<div class="nav_footer"><a class="nav_button button button_green button_full button_med" href=""><img class="button__img" src="./index_files/exchange.svg" width="10" height="13" alt="">
 										CHANGE CURRENCY
 									</a></div>
@@ -193,19 +197,19 @@
 
 				<div class="feature-list">
 					<div class="feature-card">
-						<img src="">
+						<img src="/home/exchange_icon_white.svg">
 						<h2>Realtime Prices</h2>
 						<span>
             Track and buy top cryptocurrencies at realtime prices.
         </span>
 					</div>
 					<div class="feature-card">
-						<img src="">
+						<img src="/home/wallet.svg">
 						<h2>Virtual Wallet</h2>
 						<span>Receive a virtual wallet with containing starting money to buy cryptocurrencies and then trade them.</span>
 					</div>
 					<div class="feature-card">
-						<img src="">
+						<img src="/home/challenges_icon_white.svg">
 						<h2>Challenges & Achievements</h2>
 						<span>Complete weekly challenges and unlock achievements to gain rewards. These rewards can help you increase your wealth in your wallet.</span>
 					</div>
@@ -259,24 +263,36 @@
 								<h1>Cryptocurrency Exchange</h1>
 								<form>
 
-									<span class="glow_text_form_label">Max</span>
+						<span class="glow_text_form_label">You Send</span>
 
+						<!-- Send Text Box -->
 						<div class="glow_text_box">
-							<div class="glow_text_box"><input type="numbers" placeholder="Amount"></div>
-							<div class="coin_drop_down_menu">
-								<img src="./index_files/btc.svg" style="vertical-align: middle; width: 26px; margin-right: 7px; margin-bottom: 2px;"> BTC
-							</div>
+							<input type="number" placeholder="Amount">
+
+								<img src="./index_files/eth.svg" style="margin: 3.5% 10px 0px 0px; padding-left: 10px; width: 26px; height: 25px; border: 0px;">
+
+								<select class="nav_select coin_select" data-action="change-base-currency">
+									<option value="ETH" selected="selected">ETH</option>
+									<option value="BTC">BTC</option>
+								</select>
+
 						</div>
 
 						<div style="margin: 0px auto; width: 55px; display: block; padding: 37px 15px 7px; cursor: pointer; fill: rgb(154, 164, 183);"><svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 30 18"><path class="st0" d="M24,2v15c0,0.6-0.4,1-1,1s-1-0.4-1-1V2c0-0.6,0.4-1,1-1S24,1.4,24,2z"></path><path class="st0" d="M23.7,0.3l6,6c0.4,0.4,0.4,1,0,1.4s-1,0.4-1.4,0L23,2.4l-5.3,5.3c-0.4,0.4-1,0.4-1.4,0s-0.4-1,0-1.4l6-6 C22.5,0.1,22.7,0,23,0S23.5,0.1,23.7,0.3z"></path><path class="st0" d="M6,16V1c0-0.6,0.4-1,1-1s1,0.4,1,1v15c0,0.6-0.4,1-1,1S6,16.6,6,16z"></path><path class="st0" d="M6.3,17.7l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0L7,15.6l5.3-5.3c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4l-6,6 C7.5,17.9,7.3,18,7,18S6.5,17.9,6.3,17.7z"></path></svg></div>
 
-						<span class="glow_text_form_label">Estimate</span>
+						<span class="glow_text_form_label">You Receive</span>
 
+						<!-- Receive Text Box -->
 						<div class="glow_text_box">
-							<div class="glow_text_box"><input type="text" placeholder="Estimate"></div>
-							<div class="coin_drop_down_menu">
-								<img src="./index_files/eth.svg" style="vertical-align: middle; width: 26px; margin-right: 7px; margin-bottom: 2px;"> 1ETH
-							</div>
+							<input type="number" placeholder="Amount">
+
+								<img src="./index_files/btc.svg" style="margin: 3.5% 10px 0px 0px; padding-left: 10px; width: 26px; height: 25px; border: 0px;">
+
+								<select class="nav_select coin_select" data-action="change-base-currency">
+									<option value="BTC" selected="selected">BTC</option>
+									<option value="ETH">ETH</option>
+								</select>
+
 						</div>
 
 						<a class="next_button"><span style="vertical-align: middle;">TRADE</span><img src="./index_files/bracket-right-white.svg" style="height: 11px; vertical-align: middle; margin-left: 11px; display: inline-block; margin-top: 0px;"></a>
@@ -288,7 +304,7 @@
 						</p>
 				</div>
 			</div>
-		</div>
+		</div>1
 
 		<!-------------------------------------------------------------------------->
 		<!-------------------------------------------------------------------------->
