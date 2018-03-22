@@ -83,7 +83,7 @@ class FetchCoins extends React.Component {
   }
 
   componentDidMount() {
-    console.log("mounteddd");
+    console.log("mounteddd, loaddedd");
     this.refreshCoins();
   }
 

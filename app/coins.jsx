@@ -1,3 +1,7 @@
+
+/**
+Each coin to display in the sidebar.
+*/
 function Coin(props){
   return (
 
@@ -28,7 +32,10 @@ function Coin(props){
   );
 }
 
-class FetchCoins extends React.Component {
+/**
+All the coins that will be displayed in the sidebar.
+*/
+class SideBarCoins extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -38,6 +45,7 @@ class FetchCoins extends React.Component {
     this.refreshCoins = this.refreshCoins.bind(this);
   }
 
+  /* Get all coins from the 3rd party API*/
   refreshCoins(){
     axios.get("https://api.coinmarketcap.com/v1/ticker/")
       .then(res => {
@@ -55,6 +63,7 @@ class FetchCoins extends React.Component {
   render(){
     return(
       <tbody>
+        {/* For each coin in our list of coins, create a Coin component */}
         {this.state.coins.map(coin =>
           <Coin key={coin.name} name={coin.name} abbr={coin.symbol} price={coin.price_usd} percent_change_1h={coin.percent_change_1h} />
         )}
@@ -64,4 +73,4 @@ class FetchCoins extends React.Component {
   }
 }
 
-ReactDOM.render(<FetchCoins />, document.getElementById('all_coins'));
+ReactDOM.render(<SideBarCoins />, document.getElementById('all_coins'));
