@@ -21,7 +21,7 @@ const walletSchema = new Schema({
 });
 
 
-mongoose.connect('mongodb://localhost:3001/CryotoNut', (error) => {
+mongoose.connect('mongodb://localhost:3001/CryptoNut', (error) => {
   if (error) console.log(error);
 
   console.log('Database connection successful');
