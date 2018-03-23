@@ -30,6 +30,7 @@
 			<button class="tab_button" onclick="openTab('Challenges', this, 'red')" id="challenges_btn"><span class="hide_1">CHALLENGES</span></button>
 			<button class="tab_button" onclick="openTab('Achievements', this, 'red')" id="achievements_btn"><span class="hide_1">ACHIEVEMENTS</span></button>
 			<button class="tab_button" onclick="openTab('Profile', this, 'red')" id="profile_btn"><span class="hide_1">PROFILE</span></button>
+			<div class="wallet_cash" onclick="" id="wallet_cash"><span>USD $1000.00</span></div>
 
 			<!-------------------------------------------------------------------------->
 			<!-------------------------------------------------------------------------->
@@ -180,7 +181,7 @@
 
 					<h4>Welcome to CryptoNut</h4>
 					<h1>Cryptocurrency<br>Exchange Simulator</h1>
-					<span class="description">Signup and start trading cryptocurrencies with virtual money. Get a virtual wallet to buy any popular coin.</span>
+					<span class="description">Signup and start trading cryptocurrencies in a simulator. Get a virtual wallet to buy any popular coin and instantly start trading to make a profit.</span>
 					<div class="auth">
 						<a class="button button_green button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('Trade', this, 'red')" id="signin_btn">
 							<img class="exchange_button__img button__img" src="./home/sign_in.svg" width="12" height="15" >
@@ -206,12 +207,12 @@
 					<div class="feature-card">
 						<img src="/home/wallet.svg">
 						<h2>Virtual Wallet</h2>
-						<span>Receive a virtual wallet with containing starting money to buy cryptocurrencies and then trade them.</span>
+						<span>Receive a simulated virtual wallet containing all your owned cryptocurrencies. </span>
 					</div>
 					<div class="feature-card">
 						<img src="/home/challenges_icon_white.svg">
 						<h2>Challenges & Achievements</h2>
-						<span>Complete weekly challenges and unlock achievements to gain rewards. These rewards can help you increase your wealth in your wallet.</span>
+						<span>Complete weekly challenges and unlock achievements to receive rewards.</span>
 					</div>
 				</div>
 
@@ -263,37 +264,15 @@
 								<h1>Cryptocurrency Exchange</h1>
 								<form>
 
-						<span class="glow_text_form_label">You Send</span>
-
 						<!-- Send Text Box -->
-						<div class="glow_text_box">
-							<input type="number" placeholder="Amount">
-
-							<img src="./index_files/eth.svg" style="margin: 3.5% 10px 0px 0px; padding-left: 10px; width: 26px; height: 25px; border: 0px;">
-
-							<select class="nav_select coin_select" data-action="change-base-currency">
-									<option value="ETH" selected="selected">ETH</option>
-									<option value="BTC">BTC</option>
-								</select>
-
-						</div>
+						<span class="glow_text_form_label">You Send</span>
+						<div class="glow_text_box" id="to_send_box"></div>
 
 						<div style="margin: 0px auto; width: 55px; display: block; padding: 37px 15px 7px; cursor: pointer; fill: rgb(154, 164, 183);"><svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 30 18"><path class="st0" d="M24,2v15c0,0.6-0.4,1-1,1s-1-0.4-1-1V2c0-0.6,0.4-1,1-1S24,1.4,24,2z"></path><path class="st0" d="M23.7,0.3l6,6c0.4,0.4,0.4,1,0,1.4s-1,0.4-1.4,0L23,2.4l-5.3,5.3c-0.4,0.4-1,0.4-1.4,0s-0.4-1,0-1.4l6-6 C22.5,0.1,22.7,0,23,0S23.5,0.1,23.7,0.3z"></path><path class="st0" d="M6,16V1c0-0.6,0.4-1,1-1s1,0.4,1,1v15c0,0.6-0.4,1-1,1S6,16.6,6,16z"></path><path class="st0" d="M6.3,17.7l-6-6c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0L7,15.6l5.3-5.3c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4l-6,6 C7.5,17.9,7.3,18,7,18S6.5,17.9,6.3,17.7z"></path></svg></div>
 
-						<span class="glow_text_form_label">You Receive</span>
-
 						<!-- Receive Text Box -->
-						<div class="glow_text_box">
-							<input type="number" placeholder="Amount">
-
-							<img src="./index_files/btc.svg" style="margin: 3.5% 10px 0px 0px; padding-left: 10px; width: 26px; height: 25px; border: 0px;">
-
-							<select class="nav_select coin_select" data-action="change-base-currency">
-									<option value="BTC" selected="selected">BTC</option>
-									<option value="ETH">ETH</option>
-								</select>
-
-						</div>
+						<span class="glow_text_form_label">You Receive</span>
+						<div class="glow_text_box" id="to_receive_box"></div>
 
 						<a class="next_button"><span style="vertical-align: middle;">TRADE</span><img src="./index_files/bracket-right-white.svg" style="height: 11px; vertical-align: middle; margin-left: 11px; display: inline-block; margin-top: 0px;"></a>
 						</form>
