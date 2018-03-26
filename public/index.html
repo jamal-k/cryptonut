@@ -26,11 +26,13 @@
 
 		<div class="header_right">
 
-			<button class="tab_button" onclick="openTab('Wallet', this, 'red')" id="wallet_btn"><span class="hide_1">WALLET</span></button>
-			<button class="tab_button" onclick="openTab('Challenges', this, 'red')" id="challenges_btn"><span class="hide_1">CHALLENGES</span></button>
-			<button class="tab_button" onclick="openTab('Achievements', this, 'red')" id="achievements_btn"><span class="hide_1">ACHIEVEMENTS</span></button>
-			<button class="tab_button" onclick="openTab('Profile', this, 'red')" id="profile_btn"><span class="hide_1">PROFILE</span></button>
+			<div id="top_bar_container">
+			<button class="tab_button" onclick="openTab('Wallet', this, 'red')" id="wallet_btn"><span>WALLET</span></button>
+			<button class="tab_button" onclick="openTab('Challenges', this, 'red')" id="challenges_btn"><span>CHALLENGES</span></button>
+			<button class="tab_button" onclick="openTab('Achievements', this, 'red')" id="achievements_btn"><span>ACHIEVEMENTS</span></button>
+			<button class="tab_button" onclick="openTab('Profile', this, 'red')" id="profile_btn"><span>PROFILE</span></button>
 			<div class="wallet_cash" onclick="" id="wallet_cash"><span>USD $1000.00</span></div>
+			</div>
 
 			<!-------------------------------------------------------------------------->
 			<!-------------------------------------------------------------------------->
@@ -53,12 +55,12 @@
 							<form method="post" action="">
 
 								<div class="nav_form_group">
-									<label class="nav_label" for="base_currency">Username</label><input class="nav_select"></input>
-									<label style="margin-top:10px;" class="nav_label" for="base_currency">Password</label><input type="password" class="nav_select"></input>
+									<label class="nav_label" for="base_currency">Username</label><input id="login_username" class="nav_field"></input>
+									<label style="margin-top:10px;" class="nav_label" for="base_currency">Password</label><input id="login_password" type="password" class="nav_field"></input>
 								</div>
 
 								<div class="nav_footer">
-									<a class="nav_button button button_blue button_full button_med" href=""><img class="button__img" src="./index_files/exchange.svg" width="10" height="13" alt="">
+									<a id="login_btn" class="nav_button button button_blue button_full button_med"><img class="button__img" src="./index_files/exchange.svg" width="10" height="13" alt="">
 									SIGN IN
 									</a>
 								</div>
@@ -114,7 +116,7 @@
 			<div class="left-sidebar-container">
 				<div class="body" id="sidebar">
 
-					<a class="button button_nut button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('Trade', this, 'red')" id="signin_btn">
+					<a class="button button_nut button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('Trade', this, 'red')" id="open_trade_btn">
 						<img class="exchange_button__img button__img" src="./home/exchange_icon_white.svg" width="12" height="15" >
 						TRADE
 					</a>
@@ -144,22 +146,31 @@
 		<!-------------------------------------------------------------------------->
 		<!-------------------------------------------------------------------------->
 
-		<div style="width:100%;" class="tabcontent grad_bg panel middle-content" id="SignIn">
+		<div style="width:100%;" class="tabcontent grad_bg panel middle-content" id="SignUp">
 			<div style="width: 100%;">
 				<div class="text_box_container_1">
 					<h1>Cryptocurrency Exchange Simulator</h1>
-					<h2>Sign In</h2>
+					<h2>Register</h2>
 					<form>
 
-						<span class="glow_text_form_label">Username</span>
-						<div class="glow_text_box"><input type="text" placeholder="Username"></div>
+						<span class="glow_text_form_label">*Email</span>
+						<div class="glow_text_box"><input id="register_email" type="text" placeholder="Email"></div>
 
 						<div class="text_box_spacer"></div>
 
-						<span class="glow_text_form_label">Password</span>
-						<div class="glow_text_box"><input type="password" placeholder="Password"></div>
+						<span class="glow_text_form_label">*Username</span>
+						<div class="glow_text_box"><input id="register_username" type="text" placeholder="Username"></div>
 
-						<a class="next_button"><span style="vertical-align: middle;">SIGN IN</span><img src="./index_files/bracket-right-white.svg" style="height: 11px; vertical-align: middle; margin-left: 11px; display: inline-block; margin-top: 0px;"></a>
+						<div class="text_box_spacer"></div>
+
+						<span class="glow_text_form_label">*Password</span>
+						<div class="glow_text_box"><input id="register_password"type="password" placeholder="Password"></div>
+
+						<p id="register_error_txt" class="register_error_txt_OFF"></p>
+
+						<a class="next_button" id="register_btn"><span style="vertical-align: middle;">SIGN UP</span><img src="./index_files/bracket-right-white.svg" style="height: 11px; vertical-align: middle; margin-left: 11px; display: inline-block; margin-top: 0px;"></a>
+
+
 					</form>
 
 					<p><span style="color:#ff6634">Register</span> right now to start trading.</p>
@@ -183,14 +194,10 @@
 					<h1>Cryptocurrency<br>Exchange Simulator</h1>
 					<span class="description">Signup and start trading cryptocurrencies in a simulator. Get a virtual wallet to buy any popular coin and instantly start trading to make a profit.</span>
 					<div class="auth">
-						<a class="button button_green button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('Trade', this, 'red')" id="signin_btn">
+						<a class="button button_green button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('SignUp', this, 'red')" id="signin_btn">
 							<img class="exchange_button__img button__img" src="./home/sign_in.svg" width="12" height="15" >
-							SIGN UP
-						</a> Or
-						<a class="button button_blue button_med" style="margin-left: 10%; margin-right: 10%; padding-left: 80px; padding-right: 80px;" onclick="openTab('SignIn', this, 'red')" id="signin_btn">
-	 						<img class="exchange_button__img button__img" src="./home/sign_in.svg" width="12" height="15" >
-	 						SIGN IN
-	 					</a>
+							REGISTER NOW
+						</a>
 					</div>
 
 				</div>
@@ -283,7 +290,7 @@
 						</p>
 				</div>
 			</div>
-		</div>1
+		</div>
 
 		<!-------------------------------------------------------------------------->
 		<!-------------------------------------------------------------------------->
@@ -785,6 +792,7 @@
 	</script>
 	<script src="./jss/coins.js"></script>
 	<script src="./jss/main.js"></script>
+	<script src="./jss/sign.js"></script>
 
 </body>
 

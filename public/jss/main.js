@@ -8,7 +8,7 @@ function getCollection(callback) {
 
 function addUser() {
 
-  axios.post("http://localhost:3000/user", {name: "test ff", username: "test", password: "lol"})
+  axios.post("http://localhost:3000/user", {name: "test ff", username: "test2", password: "lol"})
     .then(res => {
       console.log(res.data);
       addWallet();
@@ -17,7 +17,7 @@ function addUser() {
 
 function addWallet() {
 
-  axios.post("http://localhost:3000/wallet/", {name: "BTC", amount: 0.4444, username: "test"})
+  axios.post("http://localhost:3000/wallet/", {name: "BTC", amount: 0.4444, username: "test2"})
     .then(res => {
       console.log(res.data);
       getWallets();
@@ -26,7 +26,7 @@ function addWallet() {
 
 function getWallets() {
 
-  axios.get("http://localhost:3000/wallet/test")
+  axios.get("http://localhost:3000/wallet/test2")
     .then(res => {
       console.log(res.data);
     });
@@ -55,4 +55,4 @@ getSortedCollection(function(array) {
   console.log("Collection sorted ",array)
 })
 
-addUser();
+getWallets();

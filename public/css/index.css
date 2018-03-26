@@ -331,6 +331,40 @@ a:active:focus {
   border-color: #3cd483
 }
 
+.nav_field {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  color: #565b68;
+  font-size: 15px;
+  width: 100%;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background-color: #fff;
+  padding: 12px 40px 14px 20px;
+  margin: 6px 0 0;
+  border: 1px solid #dce0e4;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: border-color .1s ease-out;
+  -moz-transition: border-color .1s ease-out;
+  -ms-transition: border-color .1s ease-out;
+  -o-transition: border-color .1s ease-out;
+  transition: border-color .1s ease-out;
+}
+
+.nav_field:hover {
+  border-color: #3cd483;
+}
+
+.nav_field:focus {
+  outline: 0;
+  border-color: #3cd483;
+}
+
 .coin_select {
   padding: 10px 10px 10px 0px;
   height: 60px;
@@ -1141,4 +1175,13 @@ ul a, ul a:focus, ul a:hover {
   width: 26px;
   height: 25px;
   border: 0px;
+}
+
+.register_error_txt_ON{
+  color:#D50000;
+  transition: 300ms;
+}
+
+.register_error_txt_OFF{
+  color:#252525;
 }

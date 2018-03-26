@@ -6,22 +6,24 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
+var session = require('express-session');
+
+//use sessions for tracking logins
+app.use(session({
+  secret: 'clockernow',
+  resave: true,
+  saveUninitialized: false
+}));
 
 app.use(express.static('public'));
 
-/**** Wallet Routes ****/
+/**** User Routes ****/
 const users = require('./app/routes/user-routes');
-
-app.get('/user/:username', users.getUserByUsername);
-app.post('/user', users.addUser);
-
+app.use("/user", users);
 
 /**** Wallet Routes ****/
 const wallets = require('./app/routes/wallet-routes');
-
-app.get('/wallet/:username', wallets.findWalletsByUserID);
-app.post('/wallet/', wallets.addWallet);
-app.put('/wallet/:name/:username', wallets.updateWalletAmount);
+app.use("/wallet", wallets)
 
 /* Start Server */
 const PORT = process.env.PORT || 3000;

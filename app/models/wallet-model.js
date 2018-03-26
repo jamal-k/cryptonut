@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const db = require('./db-connection');
 
 /**
  * Note that the database was loaded with data from a JSON file into a
@@ -18,14 +19,6 @@ const walletSchema = new Schema({
     type: Schema.ObjectId,
     required: true
   }
-});
-
-
-mongoose.connect('mongodb://localhost:3001/CryptoNut', (error) => {
-  if (error) console.log(error);
-
-  console.log('Database connection successful');
-
 });
 
 module.exports = mongoose.model('Wallet', walletSchema);

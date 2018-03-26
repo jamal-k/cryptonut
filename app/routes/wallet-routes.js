@@ -1,62 +1,79 @@
+var express = require('express');
+var router = express.Router();
+
 const Wallet = require('../models/wallet-model');
 const User = require('../models/user-model');
 
-exports.findWalletsByUserID = (req, res) => {
+
+router.get("/:username", function findWalletsByUserID (req, res) {
   console.log('findWalletByUserID');
 
-  User.find({username: req.params.username}, (err, user) => {
+  /* Make sure user, for which wallets are being retrieved, actually exists */
+  User.findOne({username: req.params.username}, (err, user) => {
     if(!user){
       res.send("500: No user exists for this wallet.");
       return;
     }
 
+    /* Find and send all the wallets for this user */
     Wallet.find({user : user._id}, (err, all_wallets) => {
-      if(!user){
-        res.send("500: No user exists for this wallet.");
+      if(!all_wallets){
+        res.send("500: No wallets exists for this wallet.");
         return;
       }
+      else if(err){ res.send("500: An error occurred while searching for wallets: " + err); return; }
 
       if (all_wallets) {
         res.json(all_wallets);
       }
     });
 
-  }).limit(1);
+  });
 
-};
+});
 
-exports.addWallet = (req, res) => {
+router.post("/", function addWallet (req, res){
   console.log('addWallet: ', req.body);
 
-  User.find({username: req.body.username}, (err, user) => {
+  /* Make sure user, for which wallet is being added, actually exists */
+  User.findOne({username: req.body.username}, (err, user) => {
       if(!user){
         res.send("500: No user exists for this wallet.");
         return;
       }
-      else if(err){
-        res.send("500: No user exists for this wallet with error: " + err);
-        return;
-      }
+      else if(err){ res.send("500: An error occurred while adding this wallet: " + err); return; }
 
-      var w = new Wallet({
-        name: req.body.name,
-        amount: req.body.amount,
-        user: user._id
-      });
-
-      w.save((err) => {
-        if(err){
-          res.send("500: Wallet not added with error: " + err);
+      /* Add wallet if it doesn't already exist */
+      Wallet.findOne({name: req.body.name, user: user._id}, (err, wallet) => {
+        if(wallet){
+          res.send("500: The " + req.body.name + " wallet already exists for this user.");
           return;
         }
+        else if(err){ res.send("500: An error occurred while adding this wallet: " + err); return; }
 
-        res.send("Wallet added");
+        /* Create new wallet */
+        var w = new Wallet({
+          name: req.body.name,
+          amount: req.body.amount,
+          user: user._id
+        });
+
+        /* Save wallet in database */
+        w.save((err) => {
+          if(err){
+            res.send("500: Wallet not added with error: " + err);
+            return;
+          }
+
+          res.send("Wallet added");
+        });
+
       });
 
-    }).limit(1);
-};
+  });
+});
 
-exports.updateWalletAmount = (req, res) => {
+router.put("/:name/:username", function updateWalletAmount (req, res) {
   console.log('addWallet');
 
   User.find({username: req.params.userID}, (err, user) => {
@@ -75,4 +92,6 @@ exports.updateWalletAmount = (req, res) => {
 
   }).limit(1);
 
-};
+});
+
+module.exports = router

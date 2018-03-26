@@ -84,6 +84,7 @@ class SideBarCoins extends React.Component {
   /* Get all coins from the 3rd party API*/
   refreshCoins() {
     axios.get("https://api.coinmarketcap.com/v1/ticker/").then(res => {
+      console.log("REFRESHED");
       this.setState({
         coins: res.data
       });
@@ -92,7 +93,14 @@ class SideBarCoins extends React.Component {
 
   componentDidMount() {
     console.log("mounteddd, loaddedd");
+
+    /* Retrieve the list of coi1ns from the API and refresh every 60 seconds */
     this.refreshCoins();
+    this.interval = setInterval(() => this.refreshCoins(), 60000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
@@ -152,6 +160,11 @@ class SelectOptionsCoins extends React.Component {
       React.createElement(
         "select",
         { className: "nav_select coin_select", onChange: e => this.onCoinSelect(e) },
+        React.createElement(
+          "option",
+          { value: "USD" },
+          "USD"
+        ),
         this.state.coins.map((coin, i) => {
           if (i != 0) {
             return React.createElement(
