@@ -1,3 +1,9 @@
+function getCookie(name) {
+    function escape(s) { return s.replace(/([.*+?\^${}()|\[\]\/\\])/g, '\\$1'); };
+    var match = document.cookie.match(RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)'));
+    return match ? match[1] : null;
+}
+
 function getCollection(callback) {
 
   axios.get("https://api.coinmarketcap.com/v1/ticker/")
@@ -26,10 +32,13 @@ function addWallet() {
 
 function getWallets() {
 
-  axios.get("http://localhost:3000/wallet/test2")
+  axios.get("http://localhost:3000/wallet/lolddsr")
     .then(res => {
       console.log(res.data);
-    });
+    })
+    .catch((err) => {
+      console.log("error", err.response.data);
+    })
 }
 
 function getSortedCollection(callback) {

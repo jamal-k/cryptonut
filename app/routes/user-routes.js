@@ -1,39 +1,34 @@
 var express = require('express');
 var router = express.Router();
+var axios = require('axios');
 
 const User = require('../models/user-model');
 
 /**
-Return information about the user.
-*/
-router.get('/:username', function getUserByUsername (req, res) {
+Creates the user and adds it to the database.
 
-  /* Find the user and return all his information */
-  User.findOne({username: req.params.username}, (err, user) => {
-    if(user){
-      res.json(user);
-    }
-  });
-});
+TYPE: POST
+ENDPOINT: /user/
 
-/**
-Add the user to the database.
+BODY:
+  email: email of the user to create
+  username: username of the user to create
+  password: password of the user to create
+
 */
 router.post('/', function addUser(req, res) {
-  console.log("addUser: ", req.body);
+  console.log("addUser() : ", req.body);
 
   /* Add user if one doesn't already exist */
   User.findOne({email: req.body.email}, (err, email) => {
-    if(email){
-      res.send("500: email already exists");
-      return;
-    }
+
+    if(email){ res.send({msg: "500: addUser() : email already exists"}); return; }
+    else if(err){ console.log(err); return; }
 
     User.findOne({username: req.body.username}, (err, user) => {
-      if(user){
-        res.send("500: username already exists");
-        return;
-      }
+
+      if(user){ res.send({msg: "500: addUser() : username already exists"}); return; }
+      else if(err){ console.log(err); return; }
 
 
       /* Create a new user */
@@ -45,64 +40,92 @@ router.post('/', function addUser(req, res) {
 
       /* Save user to database */
       u.save((err) => {
-        if (err){
-          console.log("500: user not added with error: " + err)
-          res.send("500: user not added with error: " + err);
-          return;
-        }
+        if(err){ console.log(err); return; }
 
         req.session.userID = u._id
-        res.send("200: success");
+
+        /* Create a default USD Wallet */
+        axios.post("http://localhost:3000/wallet/", {name: "USD", amount: "10000", username: u.username})
+          .then(res => {
+            console.log(res.data);
+          });
+
+        res.send({msg: "200: success", username: u.username});
       });
 
     });
   });
 });
 
+/**
+Logs the user in by authenticating with DB and then creating a session
 
+TYPE: POST
+ENDPOINT: /user/login
+
+BODY:
+  username: username of the user to logged in
+  password: password of the user to log in
+
+*/
 router.post("/login", function loginUser(req, res){
-  console.log("HEY:", req.body);
 
   /* Check if username exists in db */
   User.authenticate(req.body.username, req.body.password, (err, user) => {
+
     if(user){
       /* Create session for user upon successful login */
       req.session.userID = user._id
-      res.send("200: login success");
+      res.send({msg: "200: login success", username: user.username});
     }
     else{
-      res.send("500: login failed");
+      res.send({msg: "500: login failed"});
     }
 
   });
 });
 
-router.post("/logout", function loginUser(req, res){
+/**
+Logs the user out by deleting the session.
+
+TYPE: GET
+ENDPOINT: /user/logout
+*/
+router.get("/logout", function loginUser(req, res){
 
   /* Make sure the session exists */
   if(req.session){
 
-    /* Make sure the user for which we are loging out exists */
-    User.findOne({username: req.body.username}, (err, user) => {
-      if(user){
+      /* Destroy the user session */
+      req.session.destroy((err) => {
 
-        /* Destroy the user session */
-        req.session.destroy((err) => {
-          if(err){
-            res.send("500: logout failed");
-          }
-          else{
-            res.send("200: logout success");
-          }
-        });
+        if(err){
+          res.send({msg: "500: logout failed"});
+        }
+        else{
+          res.send({msg: "200: logout success"});
+        }
 
-      }
-      else{
-        res.send("500: logout failed");
-      }
+      });
 
-    });
   }
+});
+
+/**
+Checks if the user is already logged in.
+
+TYPE: GET
+ENDPOINT: /user/checkauth
+*/
+router.get("/checkauth", function checkAuth(req, res){
+
+  if(req.session.userID){
+    res.send("auth");
+  }
+  else{
+    res.send("not-auth");
+  }
+
 });
 
 module.exports = router

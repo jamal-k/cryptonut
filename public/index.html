@@ -27,11 +27,6 @@
 		<div class="header_right">
 
 			<div id="top_bar_container">
-			<button class="tab_button" onclick="openTab('Wallet', this, 'red')" id="wallet_btn"><span>WALLET</span></button>
-			<button class="tab_button" onclick="openTab('Challenges', this, 'red')" id="challenges_btn"><span>CHALLENGES</span></button>
-			<button class="tab_button" onclick="openTab('Achievements', this, 'red')" id="achievements_btn"><span>ACHIEVEMENTS</span></button>
-			<button class="tab_button" onclick="openTab('Profile', this, 'red')" id="profile_btn"><span>PROFILE</span></button>
-			<div class="wallet_cash" onclick="" id="wallet_cash"><span>USD $1000.00</span></div>
 			</div>
 
 			<!-------------------------------------------------------------------------->
@@ -45,8 +40,11 @@
 			<div class="menu_container">
 				<!-- SIGN IN ICON -->
 				<div class="nav">
-					<input class="nav_toggle" id="sign_toggle" type="checkbox"><label for="sign_toggle" class="button button_blue button_med" style="margin-right:20px;">
-							<img class="button__img" src="./home/sign_in.svg" width="12" height="15" >SIGN IN</label>
+					<input class="nav_toggle" id="sign_toggle" type="checkbox"><label id="signin_btn_main" for="sign_toggle" class="button button_blue button_med" style="margin-right:20px;">
+							<img class="button__img" src="./home/sign_in.svg" width="12" height="15" >SIGN IN</label></input>
+
+					<label id="logout_btn" class="button button_red button_med" style="margin-right:20px; display: none;">
+							<img class="button__img" src="./home/sign_in.svg" width="12" height="15" >LOGOUT</label>
 
 					<div class="nav_menu">
 						<div class="nav_content">
@@ -58,6 +56,8 @@
 									<label class="nav_label" for="base_currency">Username</label><input id="login_username" class="nav_field"></input>
 									<label style="margin-top:10px;" class="nav_label" for="base_currency">Password</label><input id="login_password" type="password" class="nav_field"></input>
 								</div>
+
+								<p id="signin_error_txt" class="register_error_txt_OFF"></p>
 
 								<div class="nav_footer">
 									<a id="login_btn" class="nav_button button button_blue button_full button_med"><img class="button__img" src="./index_files/exchange.svg" width="10" height="13" alt="">
@@ -393,191 +393,8 @@
 		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="Wallet">
 			<div style="display: flex; flex: 1; width:100%;">
 				<aside class="side_bar">
-					<div class="scrollable_container_wrapper ">
-						<div class="scrollable_container" style="margin-right: -17px;">
-							<ul id="wallet_coin_list">
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>LTC ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry sidebar_entry_active">
-										<h3>BTC ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>ETH ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>XRP ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>XRP ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>XRP ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>XRP ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>XRP ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>XRP ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a class="sidebar_entry">
-										<h3>XRP ACCOUNT</h3>
-										<div class="side_bar_entry_labels_wrapper">
-											<h5 class="side_bar_entry_labels">
-												<span>Available</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-											<h5 class="side_bar_entry_labels">
-												<span>Total</span>
-												<span class="side_bar_entry_dashes"></span>
-												<span>0.00</span>
-											</h5>
-										</div>
-									</a>
-								</li>
-
-							</ul>
+					<div class="scrollable_container_wrapper">
+						<div class="scrollable_container" id="wallets_container" style="margin-right: -17px;">
 
 						</div>
 					</div>
@@ -791,6 +608,8 @@
 		});
 	</script>
 	<script src="./jss/coins.js"></script>
+	<script src="./jss/headers.js"></script>
+	<script src="./jss/wallets.js"></script>
 	<script src="./jss/main.js"></script>
 	<script src="./jss/sign.js"></script>
 

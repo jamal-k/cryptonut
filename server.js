@@ -25,6 +25,10 @@ app.use("/user", users);
 const wallets = require('./app/routes/wallet-routes');
 app.use("/wallet", wallets)
 
+/**** Wallet Routes ****/
+const trade = require('./app/routes/trade-routes');
+app.use("/trade", trade)
+
 /* Start Server */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

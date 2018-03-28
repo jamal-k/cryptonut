@@ -126,7 +126,7 @@ class SelectOptionsCoins extends React.Component {
     };
 
     this.refreshCoins = this.refreshCoins.bind(this);
-    this.refronCoinSelecteshCoins = this.onCoinSelect.bind(this);
+    this.onCoinSelect = this.onCoinSelect.bind(this);
   }
 
   /* Get all coins from the 3rd party API*/
@@ -134,9 +134,8 @@ class SelectOptionsCoins extends React.Component {
     axios.get("https://api.coinmarketcap.com/v1/ticker/").then(res => {
       this.setState({
         coins: res.data,
-        selected_coin_img: "./index_files/" + res.data[0].symbol + ".svg"
+        selected_coin_img: "./index_files/" + this.props.default_coin.toLowerCase() + ".svg"
       });
-      console.log("LOL: ", res.data[0]["symbol"]);
     });
   }
 
@@ -166,10 +165,10 @@ class SelectOptionsCoins extends React.Component {
           "USD"
         ),
         this.state.coins.map((coin, i) => {
-          if (i != 0) {
+          if (coin.symbol == this.props.default_coin) {
             return React.createElement(
               "option",
-              { value: coin.symbol },
+              { value: coin.symbol, selected: "selected" },
               coin.symbol
             );
           }
@@ -177,7 +176,7 @@ class SelectOptionsCoins extends React.Component {
           else {
               return React.createElement(
                 "option",
-                { value: coin.symbol, selected: "selected" },
+                { value: coin.symbol },
                 coin.symbol
               );
             }
@@ -187,6 +186,6 @@ class SelectOptionsCoins extends React.Component {
   }
 }
 
-ReactDOM.render(React.createElement(SelectOptionsCoins, null), document.getElementById('to_receive_box'));
-ReactDOM.render(React.createElement(SelectOptionsCoins, null), document.getElementById('to_send_box'));
+ReactDOM.render(React.createElement(SelectOptionsCoins, { default_coin: "USD" }), document.getElementById('to_send_box'));
+ReactDOM.render(React.createElement(SelectOptionsCoins, { default_coin: "BTC" }), document.getElementById('to_receive_box'));
 

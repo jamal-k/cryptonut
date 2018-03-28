@@ -4,7 +4,10 @@
   "description": "Implement the following two functions:",
   "main": "main.js",
   "scripts": {
-    "react": "./node_modules/.bin/babel app/coins.jsx > public/jss/coins.js",
+    "coins_jsx": "./node_modules/.bin/babel app/coins.jsx > public/jss/coins.js",
+    "headers_jsx": "./node_modules/.bin/babel app/headers.jsx > public/jss/headers.js",
+	"wallets_jsx": "./node_modules/.bin/babel app/wallets.jsx > public/jss/wallets.js",
+	"react": "npm run coins_jsx | npm run headers_jsx | npm run wallets_jsx",
     "server": "node server.js"
   },
   "repository": {
@@ -19,6 +22,7 @@
   },
   "homepage": "https://github.com/csc309-18s/assignment-1-clock50#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",

@@ -100,7 +100,7 @@ class SelectOptionsCoins extends React.Component {
     };
 
     this.refreshCoins = this.refreshCoins.bind(this);
-    this.refronCoinSelecteshCoins = this.onCoinSelect.bind(this);
+    this.onCoinSelect = this.onCoinSelect.bind(this);
   }
 
   /* Get all coins from the 3rd party API*/
@@ -109,9 +109,9 @@ class SelectOptionsCoins extends React.Component {
       .then(res => {
         this.setState({
           coins: res.data,
-          selected_coin_img: "./index_files/" + res.data[0].symbol + ".svg"
+          selected_coin_img: "./index_files/" + this.props.default_coin.toLowerCase() + ".svg"
         });
-        console.log("LOL: ", res.data[0]["symbol"]);
+
       });
   }
 
@@ -129,7 +129,7 @@ class SelectOptionsCoins extends React.Component {
   render(){
     return(
       <div className="glow_text_box">
-      <input type="number" placeholder="Amount"/>
+      <input id={props.amount_fld_id} onKeyUp={() => this.calculateAmount()} type="number" placeholder="Amount"/>
 
       <img src={this.state.selected_coin_img} className="select_coin_img" />
 
@@ -137,12 +137,12 @@ class SelectOptionsCoins extends React.Component {
         <option value="USD">USD</option>
         {/* For each coin in our list of coins, create a Coin component */}
         {this.state.coins.map((coin, i) => {
-           if(i != 0){
-             return <option value={coin.symbol}>{coin.symbol}</option>
+           if(coin.symbol == this.props.default_coin){
+             return <option value={coin.symbol} selected="selected">{coin.symbol}</option>
           }
           /* If it's the first element in the list, then set as selected */
           else{
-            return <option value={coin.symbol} selected="selected">{coin.symbol}</option>
+            return <option value={coin.symbol}>{coin.symbol}</option>
           }
         }
         )}
@@ -154,5 +154,5 @@ class SelectOptionsCoins extends React.Component {
   }
 }
 
-ReactDOM.render(<SelectOptionsCoins />, document.getElementById('to_receive_box'));
-ReactDOM.render(<SelectOptionsCoins />, document.getElementById('to_send_box'));
+ReactDOM.render(<SelectOptionsCoins amount_fld_id="send_amount_fld" default_coin="USD" />, document.getElementById('to_send_box'));
+ReactDOM.render(<SelectOptionsCoins amount_fld_id="rec_amount_fld" default_coin="BTC" />, document.getElementById('to_receive_box'));
