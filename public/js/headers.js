@@ -18,11 +18,13 @@ class TopBarContainer extends React.Component {
     super(props);
     this.state = {
       loggedIn: true,
-      username: ""
+      username: "",
+      usd_balance: "0"
     };
 
     this.handleTabClick = this.handleTabClick.bind(this);
     this.checkAuth = this.checkAuth.bind(this);
+    this.refreshUSDBalance = this.refreshUSDBalance.bind(this);
   }
 
   /**
@@ -50,6 +52,18 @@ class TopBarContainer extends React.Component {
   }
 
   /**
+  Refreshes the USD balance displayed in the heahders.
+  */
+  refreshUSDBalance() {
+    axios.get("http://localhost:3000/wallet/" + getCookie("username") + "/" + "USD").then(res => {
+      console.log("usdb:", res.data);
+      this.setState({
+        usd_balance: res.data.amount
+      });
+    });
+  }
+
+  /**
     Change the currently displayed panel to the one based on the tab button clicked.
   */
   handleTabClick(e, panel_name) {
@@ -65,6 +79,11 @@ class TopBarContainer extends React.Component {
 
     $("#" + panel_name)[0].classList.add("panel_target");
     e.target.focus();
+
+    /* If the wallet button was clicked, then refresh wallets */
+    if (e.target.getAttribute("id") == "wallet_btn") {
+      wallets.refreshWallets(getCookie("username"));
+    }
   }
 
   render() {
@@ -75,23 +94,16 @@ class TopBarContainer extends React.Component {
         React.createElement(TabButton, { id: "wallet_btn", name: "WALLET", onClick: e => this.handleTabClick(e, "Wallet") }),
         React.createElement(TabButton, { id: "challenges_btn", name: "CHALLENGES", onClick: e => this.handleTabClick(e, "Challenges") }),
         React.createElement(TabButton, { id: "achievements_btn", name: "ACHIEVEMENTS", onClick: e => this.handleTabClick(e, "Achievements") }),
-        React.createElement(TabButton, { id: "profile_btn", name: "PROFILE", onClick: e => this.handleTabClick(e, "Profile") }),
+        React.createElement(TabButton, { id: "profile_btn", name: this.state.username, onClick: e => this.handleTabClick(e, "Profile") }),
         React.createElement(
           "div",
           { className: "wallet_cash", onClick: "", id: "wallet_cash" },
           React.createElement(
             "span",
             null,
-            "USD $1000.00"
-          )
-        ),
-        React.createElement(
-          "div",
-          { className: "username_header", onClick: () => this.checkAuth(), id: "username_header" },
-          React.createElement(
-            "span",
-            null,
-            this.state.username
+            "$ ",
+            this.state.usd_balance,
+            " USD"
           )
         )
       );

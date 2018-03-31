@@ -6,16 +6,19 @@ const db = require('./db-connection');
  * Note that the database was loaded with data from a JSON file into a
  * collection called courses.
  */
-const tradehistorySchema = new Schema({
+const tradetransactionSchema = new Schema({
+  wallet: {
+    type: String,
+    required: true,
+  },
   type: {
     type: String,
     required: true,
     default: "trade"
   },
-  time: {
-    type: Date,
-    required: true,
-    default: Date.now
+  date: {
+    type: String,
+    required: true
   },
   amount: {
     type: String,
@@ -25,10 +28,10 @@ const tradehistorySchema = new Schema({
     type: String,
     required: true
   },
-  user: {
-    type: Schema.ObjectId,
+  username: {
+    type: String,
     required: true
   }
 });
 
-module.exports = mongoose.model('TradeHistory', tradehistorySchema);
+module.exports = mongoose.model('TradeTransaction', tradetransactionSchema);

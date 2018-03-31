@@ -101,12 +101,16 @@ class SelectOptionsCoins extends React.Component {
 
     this.refreshCoins = this.refreshCoins.bind(this);
     this.onCoinSelect = this.onCoinSelect.bind(this);
+    this.calculateAmount = this.calculateAmount.bind(this);
   }
 
-  /* Get all coins from the 3rd party API*/
+  /**
+  Get all coins from the 3rd party API
+  */
   refreshCoins(){
     axios.get("https://api.coinmarketcap.com/v1/ticker/")
       .then(res => {
+
         this.setState({
           coins: res.data,
           selected_coin_img: "./index_files/" + this.props.default_coin.toLowerCase() + ".svg"
@@ -120,6 +124,21 @@ class SelectOptionsCoins extends React.Component {
     this.refreshCoins();
   }
 
+  calculateAmount(e){
+    var selected_coin = $("#" + this.props.select_id).val()
+    var other_selected_coin = $("#" + this.props.other_select_id).val()
+    var val = e.target.value;
+
+    axios.get("https://min-api.cryptocompare.com/data/price?fsym=" + selected_coin + "&tsyms=" + other_selected_coin)
+      .then(res => {
+        console.log("KEYEDL ", res.data[other_selected_coin]);
+        $("#" + this.props.other_amount_fld_id).val(res.data[other_selected_coin] * val);
+      });
+  }
+
+  /**
+  Display the coin image on the option picker when a coin is selected.
+  */
   onCoinSelect(e){
     this.setState({
       selected_coin_img: "./index_files/" + e.target.value.toLowerCase() + ".svg"
@@ -129,11 +148,11 @@ class SelectOptionsCoins extends React.Component {
   render(){
     return(
       <div className="glow_text_box">
-      <input id={props.amount_fld_id} onKeyUp={() => this.calculateAmount()} type="number" placeholder="Amount"/>
+      <input id={this.props.amount_fld_id} onKeyUp={(e) => this.calculateAmount(e)} type="number" placeholder="Amount"/>
 
       <img src={this.state.selected_coin_img} className="select_coin_img" />
 
-      <select className="nav_select coin_select" onChange={(e) => this.onCoinSelect(e)} >
+      <select id={this.props.select_id} className="nav_select coin_select" onChange={(e) => this.onCoinSelect(e)} >
         <option value="USD">USD</option>
         {/* For each coin in our list of coins, create a Coin component */}
         {this.state.coins.map((coin, i) => {
@@ -154,5 +173,10 @@ class SelectOptionsCoins extends React.Component {
   }
 }
 
-ReactDOM.render(<SelectOptionsCoins amount_fld_id="send_amount_fld" default_coin="USD" />, document.getElementById('to_send_box'));
-ReactDOM.render(<SelectOptionsCoins amount_fld_id="rec_amount_fld" default_coin="BTC" />, document.getElementById('to_receive_box'));
+ReactDOM.render(<SelectOptionsCoins amount_fld_id="send_amount_fld" default_coin="USD"
+other_amount_fld_id="rec_amount_fld" select_id="send_select" other_select_id="rec_select"  />,
+document.getElementById('to_send_box'));
+
+ReactDOM.render(<SelectOptionsCoins amount_fld_id="rec_amount_fld" default_coin="BTC"
+other_amount_fld_id="send_amount_fld" select_id="rec_select" other_select_id="send_select"/>,
+document.getElementById('to_receive_box'));

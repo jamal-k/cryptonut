@@ -281,7 +281,10 @@
 						<span class="glow_text_form_label">You Receive</span>
 						<div class="glow_text_box" id="to_receive_box"></div>
 
-						<a class="next_button"><span style="vertical-align: middle;">TRADE</span><img src="./index_files/bracket-right-white.svg" style="height: 11px; vertical-align: middle; margin-left: 11px; display: inline-block; margin-top: 0px;"></a>
+						<a id="trade_btn" class="next_button"><span style="vertical-align: middle;">TRADE</span>
+							<div id="trade_loader" class="trade_loader"></div>
+							<img src="./index_files/bracket-right-white.svg" style="height: 11px; vertical-align: middle; margin-left: 11px; display: inline-block; margin-top: 0px;"></a>
+
 						</form>
 
 						<p>There is a <span style="color:#ff6634">0.5%</span> fee on every trade.</p>
@@ -395,7 +398,6 @@
 				<aside class="side_bar">
 					<div class="scrollable_container_wrapper">
 						<div class="scrollable_container" id="wallets_container" style="margin-right: -17px;">
-
 						</div>
 					</div>
 				</aside>
@@ -407,160 +409,7 @@
 						<div class="account_header_space"></div>
 					</div>
 
-					<div class="coin_trade_history_table">
-						<table id="t02">
-							<tr>
-								<th>Type</th>
-								<th>Time</th>
-								<th>Amount</th>
-								<th>Balance</th>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:43:21 am - Jan 18, 2018 UTC</td>
-								<td class="price">-0.00544043</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:42:04 am - Jan 18, 2018 UTC</td>
-								<td class="price">0.00544043</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:53:44 am - Dec 31, 2017 UTC</td>
-								<td class="price">0.00584600</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:52:43 am - Dec 31, 2017 UTC</td>
-								<td class="price">-0.00584600</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:43:21 am - Jan 18, 2018 UTC</td>
-								<td class="price">-0.00544043</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:42:04 am - Jan 18, 2018 UTC</td>
-								<td class="price">0.00544043</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:53:44 am - Dec 31, 2017 UTC</td>
-								<td class="price">0.00584600</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:52:43 am - Dec 31, 2017 UTC</td>
-								<td class="price">-0.00584600</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:42:04 am - Jan 18, 2018 UTC</td>
-								<td class="price">0.00544043</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:53:44 am - Dec 31, 2017 UTC</td>
-								<td class="price">0.00584600</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:52:43 am - Dec 31, 2017 UTC</td>
-								<td class="price">-0.00584600</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:42:04 am - Jan 18, 2018 UTC</td>
-								<td class="price">0.00544043</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:53:44 am - Dec 31, 2017 UTC</td>
-								<td class="price">0.00584600</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:52:43 am - Dec 31, 2017 UTC</td>
-								<td class="price">-0.00584600</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:42:04 am - Jan 18, 2018 UTC</td>
-								<td class="price">0.00544043</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:53:44 am - Dec 31, 2017 UTC</td>
-								<td class="price">0.00584600</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:52:43 am - Dec 31, 2017 UTC</td>
-								<td class="price">-0.00584600</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">05:42:04 am - Jan 18, 2018 UTC</td>
-								<td class="price">0.00544043</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:53:44 am - Dec 31, 2017 UTC</td>
-								<td class="price">0.00584600</td>
-								<td class="price">0.00000000</td>
-							</tr>
-
-							<tr>
-								<td class="price">trade</td>
-								<td class="price">06:52:43 am - Dec 31, 2017 UTC</td>
-								<td class="price">-0.00584600</td>
-								<td class="price">0.00544043</td>
-							</tr>
-
-
-						</table>
-
-					</div>
+					<div class="coin_trade_history_table" id="trade_transactions_container"></div>
 				</div>
 
 			</div>
@@ -607,11 +456,16 @@
 			});
 		});
 	</script>
-	<script src="./jss/coins.js"></script>
-	<script src="./jss/headers.js"></script>
-	<script src="./jss/wallets.js"></script>
-	<script src="./jss/main.js"></script>
-	<script src="./jss/sign.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="libs/alerty/css/alerty.css">
+	<script src="libs/alerty/js/alerty.js"></script>
+	<script src="./js/coins.js"></script>
+	<script src="./js/headers.js"></script>
+	<script src="./js/trade-transactions.js"></script>
+	<script src="./js/wallets.js"></script>
+	<script src="./js/main.js"></script>
+	<script src="./js/sign.js"></script>
+	<script src="./js/trade.js"></script>
 
 </body>
 

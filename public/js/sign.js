@@ -60,7 +60,6 @@ $("#login_btn").on("click", () => {
   if(username != "" && password != ""){
     axios.post("http://localhost:3000/user/login", {username: username, password: password})
       .then(res => {
-        console.log(res);
         if(res.data.msg == "200: login success"){
           document.cookie = "username=" + res.data.username;
           displayTopHeaders(true, res.data.username);
@@ -91,12 +90,16 @@ function displayTopHeaders(b, username){
   if(b){
     top_bar_container.setLoggedIn(true, username);
     var sign_toggle = $("#sign_toggle");
+
     if(sign_toggle.is(":checked")){
       sign_toggle.trigger("click");
     }
+
     $("#open_trade_btn").trigger("click");
     $("#logout_btn").css({"display" : "block"});
     $("#signin_btn_main").css({"display" : "none"});
+
+    top_bar_container.refreshUSDBalance();
   }
   else{
     top_bar_container.setLoggedIn(false, username);
@@ -104,10 +107,6 @@ function displayTopHeaders(b, username){
     $("#logout_btn").css({"display" : "none"});
     $("#signin_btn_main").css({"display" : "block"});
   }
-}
-
-function createUSDWallet(){
-
 }
 
 function validateEmail(email) {

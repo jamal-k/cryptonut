@@ -4,10 +4,11 @@
   "description": "Implement the following two functions:",
   "main": "main.js",
   "scripts": {
-    "coins_jsx": "./node_modules/.bin/babel app/coins.jsx > public/jss/coins.js",
-    "headers_jsx": "./node_modules/.bin/babel app/headers.jsx > public/jss/headers.js",
-	"wallets_jsx": "./node_modules/.bin/babel app/wallets.jsx > public/jss/wallets.js",
-	"react": "npm run coins_jsx | npm run headers_jsx | npm run wallets_jsx",
+    "coins_jsx": "./node_modules/.bin/babel app/coins.jsx > public/js/coins.js",
+    "headers_jsx": "./node_modules/.bin/babel app/headers.jsx > public/js/headers.js",
+	"wallets_jsx": "./node_modules/.bin/babel app/wallets.jsx > public/js/wallets.js",
+	"trade_transactions_jsx": "./node_modules/.bin/babel app/trade-transactions.jsx > public/js/trade-transactions.js",
+	"react": "npm run coins_jsx | npm run headers_jsx | npm run wallets_jsx | npm run trade_transactions_jsx",
     "server": "node server.js"
   },
   "repository": {

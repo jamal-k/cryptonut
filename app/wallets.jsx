@@ -42,7 +42,6 @@ class WalletContainer extends React.Component {
   refreshWallets(username){
     axios.get("http://localhost:3000/wallet/" + username)
       .then(res => {
-        console.log("REFRESHWALLETS RESP: ", res);
         if(res.status == 200){
           this.setState({
             wallets: res.data
@@ -51,10 +50,12 @@ class WalletContainer extends React.Component {
       });
   }
 
-  handleWalletClick(i){
+  handleWalletClick(i, wallet_name){
     this.setState({
       active: i
     });
+
+    tradetrans.refreshTradeTrans(getCookie("username"), wallet_name);
   }
 
   componentDidMount (){
@@ -67,7 +68,7 @@ class WalletContainer extends React.Component {
         {/* For each wallet in our list of wallet, create a wallet component */}
         {this.state.wallets.map((wallet, i) => {
             return <Wallet name={wallet.name} amount={wallet.amount}
-              side_style={this.state.active == i ? "sidebar_entry sidebar_entry_active" : "sidebar_entry"} onClick={() => this.handleWalletClick(i)} />
+              side_style={this.state.active == i ? "sidebar_entry sidebar_entry_active" : "sidebar_entry"} onClick={() => this.handleWalletClick(i, wallet.name)} />
         }
         )}
 

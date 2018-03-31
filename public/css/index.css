@@ -577,6 +577,36 @@ td:hover {
   background-color: rgb(60, 184, 131);
 }
 
+.next_btn_disabled {
+  display: block;
+  background-color: #555555;
+  font-size: 11px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  transition: 200ms;
+  -webkit-transition: 200ms;
+  border-radius: 50px;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 16px 10px 21px;
+  text-align: center;
+  margin-top: 47px;
+  border: 0px solid;
+  cursor: default;
+  vertical-align: middle;
+  font-family: Montserrat, sans-serif;
+  height: 52px;
+}
+
+.next_button_disabled:hover {
+  background-color: rgb(60, 184, 131);
+  cursor: default;
+}
+
+
+
+
 .menu_icon {
   display: block;
   width: 25px;
@@ -1218,6 +1248,13 @@ ul a, ul a:focus, ul a:hover {
   border: 0px;
 }
 
+.trade_success_coin_img{
+  width: 15px;
+  height: 15px;
+  border: 0px;
+  margin-right: 5px;
+}
+
 .register_error_txt_ON{
   color:#D50000;
   transition: 300ms;
@@ -1225,4 +1262,51 @@ ul a, ul a:focus, ul a:hover {
 
 .register_error_txt_OFF{
   color:#252525;
+}
+
+/* Loading Circle */
+.trade_loader {
+  border: 3px solid #f3f3f3;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  border-top: 3px solid #1E88E5;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-left: 11px;
+  display: none;
+}
+
+.trade_loader_ON {
+  display: inline-block;
+}
+
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
