@@ -62,7 +62,7 @@ router.post('/', function addUser(req, res) {
 });
 
 /**
-Logs the user in by authenticating with DB and then creating a session
+Logs the user in by authenticating with DB and then creating a session.
 
 TYPE: POST
 ENDPOINT: /user/login
