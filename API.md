@@ -6,120 +6,164 @@ ENDPOINT: /achievement/username=
 PARAMETERS:
   username: username of the user's achievements to get
 RESPONSE:
-  achievements: a list of achievements of the given user
+  Code 200 Success:
+    Content: { achievements: [list of achievements] }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
 
 
 Challenge:
 
-Return a list of all challenges of a given name.
+Return a list of all challengers and their progress of a given challenge.
 TYPE: GET
 ENDPOINT: /challenge/name=
 PARAMETERS:
-  name: the unique name of the challenges to return
+  name: the name of the challenge
 RESPONSE:
-  achievements: a list of achievements of the given user
+  Code 200 Success:
+    Content: { challenges: [list of challengers with progress for each] }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
 
-Return a list of all challenges
+Return a list of all challenges.
 TYPE: GET
 ENDPOINT: /challenge
 RESPONSE:
-  challenges: a list of challenges
+  Code 200 Success:
+    Content: { challenges: [list of challenges] }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
 
-Start  a given challenge for the user.
+Start a given challenge for a user.
 TYPE: POST
 ENDPOINT: /challenge
 BODY:
-  username: the user for which to start the challenge
-  name: the name of the challenge to start
-
-Return a list of all challenges of a given name.
-TYPE: GET
-ENDPOINT: /challenge/name=
-PARAMETERS:
-  name: the unique name of the challenges to return
+  { username: "username",
+    name: "challenge_name" }
 RESPONSE:
-  achievements: a list of achievements of the given user
+  Code 200 Success:
+    Content: { msg: "200: challenge started" }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
 
 
 Trade:
-Trades two coins of the user.
+
+Trade two coins of a user.
 TYPE: POST
 ENDPOINT: /trade/username=
 PARAMETERS:
   username: username of the user's coins to trade
 BODY:
-  send_coin: symbol of the wallet from which we are sending money
-  rec_coin: symbol of the wallet which will be receiving money
-  send_amount: the amount of coins we are trading
+  { send_coin: "sending_wallet_symbol",
+    rec_coin: "receiving_wallet_symbol",
+    send_amount: integer coin amount }
 RESPONSE:
-  msg: the message
-  send_coin: the coin sent
-  rec_coin: the coin received
-  rec_amount: they amount of the coin received
-  send_balance: the balance left for the sent coin
+  Code 200 Success:
+    Content :
+	  { msg: "",
+	    send_coin: "sent_coin",
+		rec_coin: "received_coin",
+		rec_amount: integer coin amount,
+		send_balance: integer remaining balance of sent coin }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
 
-Retrieves all the trade transactions of a wallet for a specific user.
+Retrieve all the trade transactions of a wallet for a user.
 TYPE: GET
 ENDPOINT: /trade/username=/wallet_name=
 PARAMETERS:
   username: username of the user's trade transactions to retrieve
   wallet_name: name of the wallet's trade transactions to retrieve
+RESPONSE:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX TODO XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
 User:
 
-Creates the user and adds it to the database.
+Create the user and adds it to the database.
 TYPE: POST
 ENDPOINT: /user/
 BODY:
-  email: email of the user to create
-  username: username of the user to create
-  password: password of the user to create
+  { email: "email",
+    username: "username",
+    password: "password" }
+RESPONSE:
+  Code 200 Success:
+    Content: { msg: "200: success" }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
 
-Logs the user in by authenticating with DB and then creating a session.
+Log the user in by authenticating with DB and then creating a session.
 TYPE: POST
 ENDPOINT: /user/login
 BODY:
-  username: username of the user to logged in
-  password: password of the user to log in
+  { username: "username",
+    password: "password" }
+RESPONSE:
+  Code 200 Success:
+    Content: { msg: "200: login success" }
+  Code 500 Internal Server Error:
+    Content: { msg: "500: login failed" }
 
-Logs the user out by deleting the session.
+Log the user out by deleting the session.
 TYPE: GET
 ENDPOINT: /user/logout
+RESPONSE:
+  Code 200 Success:
+    Content: { msg: "200: logout success" }
+  Code 500 Internal Server Error:
+    Content: { msg: "500: logout failed" }
 
 Checks if the user is already logged in.
 TYPE: GET
 ENDPOINT: /user/checkauth
+RESPONSE:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX TODO XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
 Wallet:
 
-Retrieves all the wallets for a specific user.
+Retrieve all the wallets for a specific user.
 TYPE: GET
 ENDPOINT: /wallet/username=
 PARAMETERS:
   username: username of the user's wallets to retrieve
+RESPONSE:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX TODO XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-Retrieves specified wallet for the user.
+Retrieve specified wallet for the user.
 TYPE: GET
 ENDPOINT: /wallet/username=/wallet=
 PARAMETERS:
   username: username of the user's wallet to retrieve
   wallet: the name of the wallet to retrieve
+RESPONSE:
+XXXXXXXXXXXXXXXXXXXXXXXXXXXX TODO XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-Adds a wallet to the database for a specific user.
+Add a wallet to the database for a specific user.
 TYPE: POST
 ENDPOINT: /wallet/
 BODY:
-  username: username of the user to add wallet to
-  name: name of the wallet being added
-  secret_key: required to make calls to this api
+  { username: "username",
+    name: "wallet_name",
+	secret_key: "key" }
+RESPONSE:
+  Code 200 Success:
+    Content: { msg: "200: wallet added" }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
 
-Updates a user's specific wallet's amount.
+Update a user's specific wallet's amount.
 TYPE: POST
 ENDPOINT: /wallet/name=/username=
 BODY:
-  username: username of the user for which the wallet is being updated
-  name: name of the wallet being updated
-  amount: the amount to add (or subtract if negative) from the wallet
-  secret_key: required to make calls to this api
+  { username: "username",
+    name: "wallet_name",
+	amount: integer amount to modify wallet by,
+	secret_key: "key" }
+RESPONSE:
+  Code 200 Success:
+    Content: { msg: "200: wallet updated" }
+  Code 500 Internal Server Error:
+    Content: { msg: "[error message]" }
