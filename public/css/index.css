@@ -1310,3 +1310,32 @@ ul a, ul a:focus, ul a:hover {
     transform: rotate(360deg);
   }
 }
+
+.selected_challenge_container {
+  text-transform: capitalize;
+  text-align: center;
+  color: #FFF;
+  padding: 0 35px 61px
+}
+
+.selected_challenge_container h1 {
+  font-size: 38px;
+  color: #c1694f;
+  padding: 10px;
+  font-weight: lighter;
+  line-height: 52px;
+  margin-bottom: 0
+}
+
+.selected_challenge_container .description {
+  padding: 15px 20px 42px;
+  color: #fff;
+  display: inline-block;
+  text-transform: none;
+  font-size: 16px;
+  width: 60%
+}
+
+.button_start_challenge {
+  .margin-bottom: 20px;
+}

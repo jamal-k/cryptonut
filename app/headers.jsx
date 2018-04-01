@@ -1,9 +1,7 @@
 function TabButton(props){
   return (
     <button className="tab_button" onClick={props.onClick} id={props.id}>
-      <span>
         {props.name}
-      </span>
     </button>
   );
 }
@@ -82,6 +80,16 @@ class TopBarContainer extends React.Component {
     /* If the wallet button was clicked, then refresh wallets */
     if(e.target.getAttribute("id") == "wallet_btn"){
       wallets.refreshWallets(getCookie("username"));
+    }
+
+    /* If the achievements button was clicked, then refresh achievements */
+    if(e.target.getAttribute("id") == "achievements_btn"){
+      achs.refreshAchievements(getCookie("username"));
+    }
+
+    /* If the achievements button was clicked, then refresh achievements */
+    if(e.target.getAttribute("id") == "challenges_btn"){
+      chas.refreshChallenges();
     }
   }
 

@@ -2,11 +2,7 @@ function TabButton(props) {
   return React.createElement(
     "button",
     { className: "tab_button", onClick: props.onClick, id: props.id },
-    React.createElement(
-      "span",
-      null,
-      props.name
-    )
+    props.name
   );
 }
 
@@ -56,7 +52,6 @@ class TopBarContainer extends React.Component {
   */
   refreshUSDBalance() {
     axios.get("http://localhost:3000/wallet/" + getCookie("username") + "/" + "USD").then(res => {
-      console.log("usdb:", res.data);
       this.setState({
         usd_balance: res.data.amount
       });
@@ -83,6 +78,16 @@ class TopBarContainer extends React.Component {
     /* If the wallet button was clicked, then refresh wallets */
     if (e.target.getAttribute("id") == "wallet_btn") {
       wallets.refreshWallets(getCookie("username"));
+    }
+
+    /* If the achievements button was clicked, then refresh achievements */
+    if (e.target.getAttribute("id") == "achievements_btn") {
+      achs.refreshAchievements(getCookie("username"));
+    }
+
+    /* If the achievements button was clicked, then refresh achievements */
+    if (e.target.getAttribute("id") == "challenges_btn") {
+      chas.refreshChallenges();
     }
   }
 

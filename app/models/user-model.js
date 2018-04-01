@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 const db = require('./db-connection');
 var bcrypt = require('bcrypt');
 
-/**
- * Note that the database was loaded with data from a JSON file into a
- * collection called courses.
- */
 const userSchema = new Schema({
   email: {
     type: String,

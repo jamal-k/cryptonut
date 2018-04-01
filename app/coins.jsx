@@ -140,9 +140,19 @@ class SelectOptionsCoins extends React.Component {
   Display the coin image on the option picker when a coin is selected.
   */
   onCoinSelect(e){
-    this.setState({
-      selected_coin_img: "./index_files/" + e.target.value.toLowerCase() + ".svg"
+
+    $.get( "./index_files/" + e.target.value.toLowerCase() + ".svg")
+    .done(function() {
+      this.setState({
+        selected_coin_img: "./index_files/" + e.target.value.toLowerCase() + ".svg"
+      });
+    })
+    .fail(function() {
+      this.setState({
+        selected_coin_img: "./index_files/usd.svg"
+      });
     });
+
   }
 
   render(){

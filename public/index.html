@@ -304,42 +304,9 @@
 		<!-------------------------------------------------------------------------->
 
 		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="Achievements">
-			<table id="t01">
-				<tr>
-					<th>ACHIEVEMENTS</th>
-					<th>DESCRIPTION</th>
-					<th>PROGRESS</th>
-				</tr>
 
-				<tr>
-					<td class="currency"><span class="currency_rank">1</span><img class="currency_logo_img" src="./home/Challenge_completed.PNG" width="23" height="23">Noob Investor</td>
-					<td class="price">Buy any coin</td>
-					<td class="price">1/1</td>
-				</tr>
+			<div id="achievements_container"></div>
 
-				<tr>
-					<td class="currency"><span class="currency_rank">2</span><img class="currency_logo_img" src="./home/Challenge_uncompleted.PNG" width="23" height="23">Nutty Investor</td>
-					<td class="price">Buy 10 different cryptos</td>
-					<td class="price">1/10</td>
-				</tr>
-
-				<tr>
-					<td class="currency"><span class="currency_rank">3</span><img class="currency_logo_img" src="./home/Challenge_completed.PNG" width="23" height="23">Gains</td>
-					<td class="price">Make a profit</td>
-					<td class="price">1/1</td>
-				</tr>
-
-			</table>
-
-			<div class="coin_list_summary grad_bg" id="page_nums2">
-				<div class="wrapper">
-					<div class="align-center">
-						<div class="pagination"><a class="button button_disabled pagination__button">
-							<img class="pagination__prev" src="./index_files/prev.svg" width="8" height="13" alt="Previous page"></a><span class="pagination__info">Page <b>1</b> of <b>1</b></span>
-							<a class="button button_nut pagination__button" href=""><img class="pagination__next" src="./index_files/next.svg" width="8" height="13" alt="Next page"></a></div>
-					</div>
-				</div>
-			</div>
 		</div>
 
 		<!-------------------------------------------------------------------------->
@@ -351,38 +318,11 @@
 		<!-------------------------------------------------------------------------->
 
 		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="Challenges">
-			<table id="t01">
-				<tr>
-					<th>CHALLENGES</th>
-					<th>DESCRIPTION</th>
-					<th>PROGRESS</th>
-				</tr>
+			<div id="challenges_container"></div>
+		</div>
 
-				<tr>
-					<td class="currency"><span class="currency_rank">1</span><img class="currency_logo_img" src="./home/Challenge_completed.PNG" width="23" height="23">10k Way</td>
-					<td class="price">Everyone is given 10k and a new challenge wallet,<br> the person with the highest valued wallet at the end of the week wins.</td>
-					<td class="price">$10,000</td>
-				</tr>
-
-				<tr>
-					<td class="currency"><span class="currency_rank">2</span><img class="currency_logo_img" src="./home/Challenge_uncompleted.PNG" width="23" height="23">Nutty Investor</td>
-					<td class="price">Buy 10 different cryptos</td>
-					<td class="price">1/10</td>
-				</tr>
-
-
-			</table>
-
-			<div class="coin_list_summary grad_bg" id="page_nums">
-				<div class="wrapper">
-					<div class="align-center">
-						<div class="pagination"><a class="button button_disabled pagination__button">
-							<img class="pagination__prev" src="./index_files/prev.svg" width="8" height="13" alt="Previous page"></a><span class="pagination__info">Page <b>1</b> of <b>1</b></span>
-							<a class="button button_nut pagination__button" href=""><img class="pagination__next" src="./index_files/next.svg" width="8" height="13" alt="Next page"></a></div>
-					</div>
-				</div>
-			</div>
-
+		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="SelectedChallenge">
+			<div id="selected_challenge_container" class="selected_challenge_container"></div>
 		</div>
 
 		<!-------------------------------------------------------------------------->
@@ -466,6 +406,11 @@
 	<script src="./js/main.js"></script>
 	<script src="./js/sign.js"></script>
 	<script src="./js/trade.js"></script>
+	<script src="./js/achievements.js"></script>
+	<script src="./js/selected-challenge.js"></script>
+	<script src="./js/challenges.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="./js/ach-alerts.js"></script>
 
 </body>
 

@@ -6,9 +6,12 @@
   "scripts": {
     "coins_jsx": "./node_modules/.bin/babel app/coins.jsx > public/js/coins.js",
     "headers_jsx": "./node_modules/.bin/babel app/headers.jsx > public/js/headers.js",
-	"wallets_jsx": "./node_modules/.bin/babel app/wallets.jsx > public/js/wallets.js",
-	"trade_transactions_jsx": "./node_modules/.bin/babel app/trade-transactions.jsx > public/js/trade-transactions.js",
-	"react": "npm run coins_jsx | npm run headers_jsx | npm run wallets_jsx | npm run trade_transactions_jsx",
+    "wallets_jsx": "./node_modules/.bin/babel app/wallets.jsx > public/js/wallets.js",
+    "trade_transactions_jsx": "./node_modules/.bin/babel app/trade-transactions.jsx > public/js/trade-transactions.js",
+    "achievements_jsx": "./node_modules/.bin/babel app/achievements.jsx > public/js/achievements.js",
+	"challenges_jsx": "./node_modules/.bin/babel app/challenges.jsx > public/js/challenges.js",
+	"selected-challenge_jsx": "./node_modules/.bin/babel app/selected-challenge.jsx > public/js/selected-challenge.js",
+    "react": "npm run coins_jsx | npm run headers_jsx | npm run wallets_jsx  | npm run trade_transactions_jsx | npm run achievements_jsx | npm run challenges_jsx | npm run selected-challenge_jsx",
     "server": "node server.js"
   },
   "repository": {
@@ -31,7 +34,8 @@
     "http-server": "^0.11.1",
     "mongodb": "^3.0.4",
     "mongoose": "^5.0.11",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "socket.io": "^2.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

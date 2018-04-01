@@ -6,6 +6,7 @@ var axios = require('axios');
 const Wallet = require('../models/wallet-model');
 const User = require('../models/user-model');
 const TradeTransaction = require('../models/trade-transaction-model');
+const ChallengesManager = require('../challenges-manager');
 
 /**
 Trades two coins of the user.
@@ -40,14 +41,14 @@ router.post("/:username", function tradeCoins (req, res) {
   User.findOne({username: req.params.username}, (err, user) => {
 
     if(!user){ res.status(500).send({msg: "User does not exist for this trade to happen."}); return; }
-    if(err){ console.log(err); return; }
+    if(err){ console.log("tradeCoins() 1: ", err); return; }
 
     /* Check if user has the wallet for the coin they are sending */
     Wallet.findOne({user : user._id, name: req.body.send_coin}, (err, send_wallet) => {
 
       /* If the user doesn't, then send an error */
       if(!send_wallet){ res.status(500).send({msg: "You do not have any " + req.body.send_coin + "."}); return; }
-      if(err){ console.log(err); return; }
+      if(err){ console.log("tradeCoins() 2: ", err); return; }
 
       /* If not enough coins in sending wallet, then return error */
       if(Number(req.body.send_amount) <= 0){
@@ -64,7 +65,9 @@ router.post("/:username", function tradeCoins (req, res) {
       /* Check if user has the wallet for the coin they are receiving */
       Wallet.findOne({user : user._id, name: req.body.rec_coin}, (err, rec_wallet) => {
 
-        if(!rec_wallet){
+        if(!rec_wallet || rec_wallet == undefined){
+
+          console.log("doesnt exist")
 
           /* Create an empty wallet if wallet doesn't exist */
           createEmptyWallet(user.username, req.body.rec_coin, (add_response) => {
@@ -72,14 +75,18 @@ router.post("/:username", function tradeCoins (req, res) {
             if(add_response == "200: wallet added"){
 
 
-              /* Commit to the trade since all tests have passed */
-              commitTrade(user.username, send_wallet, rec_wallet, req.body.send_amount, (trade_resp) => {
-                if(trade_resp.status == 500){
-                  res.status(500).send(trade_resp);
-                }
-                else{
-                  res.send(trade_resp);
-                }
+              Wallet.findOne({user : user._id, name: req.body.rec_coin}, (err, rec_wallet2) => {
+
+                /* Commit to the trade since all tests have passed */
+                commitTrade(user.username, send_wallet, rec_wallet2, req.body.send_amount, (trade_resp) => {
+                  if(trade_resp.status == 500){
+                    res.status(500).send(trade_resp);
+                  }
+                  else{
+                    res.send(trade_resp);
+                  }
+                });
+
               });
 
             }
@@ -88,17 +95,26 @@ router.post("/:username", function tradeCoins (req, res) {
           });
 
         }
-        else if(err){ console.log(err); return; }
+        else if(err){ console.log("tradeCoins() 3: ", err); return; }
+        else{
 
-        /* Commit to the trade since the receiving wallet exists and all prev test pass */
-        commitTrade(user.username, send_wallet, rec_wallet, req.body.send_amount, (trade_resp) => {
-          if(trade_resp.status == 500){
-            res.status(500).send(trade_resp);
+          /* If both wallets are challenge wallets, then they cannot be traded */
+          if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency != ""){
+            res.status(500).send({msg: "You cannot trade between challenge wallets."});
+            return;
           }
-          else{
-            res.send(trade_resp);
-          }
-        });
+
+          /* Commit to the trade since the receiving wallet exists and all prev test pass */
+          commitTrade(user.username, send_wallet, rec_wallet, req.body.send_amount, (trade_resp) => {
+            if(trade_resp.status == 500){
+              res.status(500).send(trade_resp);
+            }
+            else{
+              res.send(trade_resp);
+            }
+          });
+
+        }
 
       });
 
@@ -109,7 +125,7 @@ router.post("/:username", function tradeCoins (req, res) {
 });
 
 function createEmptyWallet(username, name, callback){
-  axios.post("http://localhost:3000/wallet/", {name: name, amount: 0, username: username})
+  axios.post("http://localhost:3000/wallet/", {name: name, amount: 0, username: username, secret_key: "clock50boisonly"})
     .then(res => {
       callback(res.data);
   });
@@ -119,7 +135,8 @@ function commitTrade(username, send_wallet, rec_wallet, send_amnt, callback){
 
   /* New amount in sending wallet is it's current balance minus the sending amount */
   var new_amount = Number(send_wallet.amount) - Number(send_amnt);
-  var send_name = send_wallet.name;
+  var send_currency = send_wallet.challenge_currency == "" ? send_wallet.name : send_wallet.challenge_currency;
+  var rec_currency = rec_wallet.challenge_currency == "" ? rec_wallet.name : rec_wallet.challenge_currency;
 
   /* Update the sending wallet's amount */
   axios.post("http://localhost:3000/wallet/update", {name: send_wallet.name,
@@ -129,10 +146,10 @@ function commitTrade(username, send_wallet, rec_wallet, send_amnt, callback){
       if(res.data == "200: wallet updated"){
 
         /* Get the exchange rate from send_wallet to rec_wallet */
-        axios.get("https://min-api.cryptocompare.com/data/price?fsym=" + send_name + "&tsyms=" + rec_wallet.name)
+        axios.get("https://min-api.cryptocompare.com/data/price?fsym=" + send_currency + "&tsyms=" + rec_currency)
           .then(res => {
 
-            var receiving_amount = res.data[rec_wallet.name] * send_amnt;
+            var receiving_amount = res.data[rec_currency] * send_amnt;
 
             /* Covert the amount to rec_coin, and update the rec_wallet */
             axios.post("http://localhost:3000/wallet/update", {name: rec_wallet.name,
@@ -143,24 +160,33 @@ function commitTrade(username, send_wallet, rec_wallet, send_amnt, callback){
                 /* On success, send response informing of trade between two coins */
                 if(res.data == "200: wallet updated"){
 
-                  callback({msg: "200: trade success", send_coin: send_name, rec_coin: rec_wallet.name,
+                  callback({msg: "200: trade success", send_coin: send_wallet.name, rec_coin: rec_wallet.name,
                   rec_amount: receiving_amount, send_balance: new_amount, status: 200})
 
-                  createTradeTransaction(username, send_name, new_amount, rec_wallet.name, send_amnt, receiving_amount);
-
+                  createTradeTransaction(username, send_wallet.name, new_amount, rec_wallet.name, send_amnt, receiving_amount);
+                  handleChallenges(username, send_wallet.name, new_amount, rec_wallet.name, send_amnt, receiving_amount);
                 }
                 else{
                   callback({msg: "Trade failed.", status: 500})
                 }
 
+            })
+            .catch((err) => {
+              console.log("commitTrade() 1: ", err);
             });
 
+          })
+          .catch((err) => {
+            console.log("commitTrade() 2: ", err);
           });
       }
       else{
         console.log("fo", res.data);
         callback({msg: "Trade failed. Failed to update sending wallet.", status: 500})
       }
+  })
+  .catch((err) => {
+    console.log("commitTrade() 3: ", err);
   });
 }
 
@@ -191,14 +217,19 @@ function createTradeTransaction(username, send_wallet_name, send_wallet_balance,
     });
 
     t1.save((err) => {
-      if(err){ console.log(err); return; }
+      if(err){ console.log("createTradeTransaction() 1: ", err); return; }
     });
 
     t2.save((err) => {
-      if(err){ console.log(err); return; }
+      if(err){ console.log("createTradeTransaction() 2: ", err); return; }
     });
 
   });
+}
+
+function handleChallenges(username, send_wallet_name, send_wallet_balance, rec_wallet_name, send_amount, rec_amount){
+  ChallengesManager.updateValueCha(username, send_wallet_name);
+  ChallengesManager.updateValueCha(username, rec_wallet_name);
 }
 
 /**

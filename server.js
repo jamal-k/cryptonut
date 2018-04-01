@@ -8,6 +8,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 var session = require('express-session');
 
+clients = []
+
 //use sessions for tracking logins
 app.use(session({
   secret: 'clockernow',
@@ -25,12 +27,38 @@ app.use("/user", users);
 const wallets = require('./app/routes/wallet-routes');
 app.use("/wallet", wallets)
 
-/**** Wallet Routes ****/
+/**** Trade Routes ****/
 const trade = require('./app/routes/trade-routes');
 app.use("/trade", trade)
 
+/**** Achievement Routes ****/
+const achievement = require('./app/routes/achievement-routes');
+app.use("/achievement", achievement);
+
+/**** Challenge Routes ****/
+const challenge = require('./app/routes/challenge-routes');
+app.use("/challenge", challenge);
+
+/** Setup socket.io **/
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+
+
+
+io.on('connection', function (socket) {
+  console.log('A client is connected!');
+  clients.push(socket)
+
+  socket.on('disconnect', function () {
+    console.log('A client is disconnected!');
+    var i = clients.indexOf(socket);
+    clients.splice(i, 1);
+  });
+
+});
+
 /* Start Server */
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });

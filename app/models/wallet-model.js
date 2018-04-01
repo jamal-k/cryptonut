@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const db = require('./db-connection');
 
-/**
- * Note that the database was loaded with data from a JSON file into a
- * collection called courses.
- */
 const walletSchema = new Schema({
   name: {
     type: String,
@@ -18,6 +14,11 @@ const walletSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     required: true
+  },
+  challenge_currency: {
+    type: String,
+    required: false,
+    default: ""
   }
 });
 

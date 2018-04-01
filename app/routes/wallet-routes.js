@@ -3,6 +3,7 @@ var router = express.Router();
 
 const Wallet = require('../models/wallet-model');
 const User = require('../models/user-model');
+const AchievementsManager = require('../achievements-manager');
 
 /**
 Retrieves all the wallets for a specific user.
@@ -66,13 +67,13 @@ router.get("/:username/:wallet", function findWalletByName (req, res) {
   User.findOne({username: req.params.username}, (err, user) => {
 
     if(!user){ res.status(500).send("No user exists for this wallet."); return; }
-    if(err){ console.log(err); return; }
+    if(err){ console.log("findWalletByName() 1: ", err); return; }
 
     /* Find and send all the wallets for this user */
     Wallet.findOne({user : user._id, name: req.params.wallet}, (err, wallet) => {
 
       if(!wallet){ res.status(500).send("Wallet does not exist."); return; }
-      if(err){ console.log(err); return; }
+      if(err){ console.log("findWalletByName() 2: ", err); return; }
 
       res.send(wallet);
     });
@@ -97,20 +98,21 @@ router.post("/", function addWallet (req, res){
   console.log('addWallet() : ', req.body);
 
   if(req.body.secret_key != "clock50boisonly"){
-    req.status(500).send("Not authorized to use this API.")
+    res.status(500).send("Not authorized to use this API.");
+    return;
   }
 
   /* Make sure user, for which wallet is being added, actually exists */
   User.findOne({username: req.body.username}, (err, user) => {
 
       if(!user){ res.status(500).send({msg: "No user exists for this wallet to be added."}); return; }
-      if(err){ console.log(err); return; }
+      if(err){ console.log("addWallet() 1: ", err); return; }
 
       /* Add wallet if it doesn't already exist */
       Wallet.findOne({name: req.body.name, user: user._id}, (err, wallet) => {
 
         if(wallet){ res.status(500).send({msg: "The " + req.body.name + " wallet already exists for this user."}); return; }
-        if(err){ console.log(err); return; }
+        if(err){ console.log("addWallet() 2: ", err); return; }
 
         /* Create new wallet */
         var w = new Wallet({
@@ -121,9 +123,11 @@ router.post("/", function addWallet (req, res){
 
         /* Save wallet in database */
         w.save((err) => {
-          if(err){ console.log(err); return; }
+          if(err){ console.log("addWallet() 3: ", err); return; }
 
           res.send("200: wallet added");
+          AchievementsManager.updateCheckBuyCoinsAchs(user.username);
+
         });
 
       });
@@ -149,20 +153,20 @@ router.post("/update", function updateWalletAmount (req, res) {
   console.log('updateWalletAmount()');
 
   if(req.body.secret_key != "clock50boisonly"){
-    req.status(500).send("Not authorized to use this API.")
+    res.status(500).send("Not authorized to use this API.")
   }
 
   /* Check if user exists */
   User.findOne({username: req.body.username}, (err, user) => {
 
     if(!user){ res.status(500).send({msg: "No user exists for this wallet to be updated."}); return; }
-    if(err){ console.log(err); return; }
+    if(err){ console.log("updateWalletAmount() 1: ", err); return; }
 
     /* Check if wallet being updated exists */
     Wallet.findOne({user: user._id, name: req.body.name}, (err, w) => {
 
       if(!w){ res.status(500).send({msg: "Wallet being updated doesn't exist."}); return; }
-      if(err){ console.log(err); return; }
+      if(err){ console.log("updateWalletAmount() 2: ", err); return; }
 
       /* If negative, then subtract from the current balance */
       if(req.body.negative == true){
@@ -174,7 +178,7 @@ router.post("/update", function updateWalletAmount (req, res) {
 
       w.amount = new_amount;
       w.save((err) =>{
-        if(err){ console.log(err); return; }
+        if(err){ console.log("updateWalletAmount() 3: ", err); return; }
 
         res.send("200: wallet updated");
       });

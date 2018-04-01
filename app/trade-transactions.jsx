@@ -31,6 +31,9 @@ class TradeTransactionsContainer extends React.Component {
             tradetrans: res.data
           });
         }
+      })
+      .catch((err) => {
+        console.log(err.response);
       });
   }
 

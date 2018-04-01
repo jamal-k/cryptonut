@@ -3,6 +3,7 @@ var router = express.Router();
 var axios = require('axios');
 
 const User = require('../models/user-model');
+const AchievementsManager = require('../achievements-manager');
 
 /**
 Creates the user and adds it to the database.
@@ -23,12 +24,12 @@ router.post('/', function addUser(req, res) {
   User.findOne({email: req.body.email}, (err, email) => {
 
     if(email){ res.send({msg: "500: addUser() : email already exists"}); return; }
-    else if(err){ console.log(err); return; }
+    if(err){ console.log("addUser() 1: ", err); return; }
 
     User.findOne({username: req.body.username}, (err, user) => {
 
       if(user){ res.send({msg: "500: addUser() : username already exists"}); return; }
-      else if(err){ console.log(err); return; }
+      else if(err){ console.log("addUser() 2: ", err); return; }
 
 
       /* Create a new user */
@@ -40,15 +41,18 @@ router.post('/', function addUser(req, res) {
 
       /* Save user to database */
       u.save((err) => {
-        if(err){ console.log(err); return; }
+        if(err){ console.log("addUser() 3: ", err); return; }
 
         req.session.userID = u._id
 
         /* Create a default USD Wallet */
-        axios.post("http://localhost:3000/wallet/", {name: "USD", amount: "10000", username: u.username})
+        axios.post("http://localhost:3000/wallet/", {name: "USD", amount: "10000", username: u.username, secret_key: "clock50boisonly"})
           .then(res => {
             console.log(res.data);
           });
+
+        /* Subscribe the user to all the achievments */
+        AchievementsManager.createUserAchievements(u.username);
 
         res.send({msg: "200: success", username: u.username});
       });
