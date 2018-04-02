@@ -9,6 +9,7 @@ const AchievementsManager = require('../achievements-manager');
 Retrieves all the wallets for a specific user.
 
 TYPE: GET
+
 ENDPOINT: /wallet/username=
 
 PARAMETERS:
@@ -48,6 +49,7 @@ router.get("/:username", function findWalletsByUserID (req, res) {
 Retrieves specified wallet for the user.
 
 TYPE: GET
+
 ENDPOINT: /wallet/username=/wallet=
 
 PARAMETERS:
@@ -86,12 +88,13 @@ router.get("/:username/:wallet", function findWalletByName (req, res) {
 Adds a wallet to the database for a specific user.
 
 TYPE: POST
+
 ENDPOINT: /wallet/
 
 BODY:
   username: username of the user to add wallet to
   name: name of the wallet being added
-  secret_key: required to make calls to this api
+  secret_key: required to make calls to this api endpoint
 
 */
 router.post("/", function addWallet (req, res){
@@ -140,15 +143,14 @@ router.post("/", function addWallet (req, res){
 Updates a user's specific wallet's amount.
 
 TYPE: POST
+
 ENDPOINT: /wallet/name=/username=
 
 BODY:
   username: username of the user for which the wallet is being updated
   name: name of the wallet being updated
   amount: the amount to add (or subtract if negative) from the wallet
-  secret_key: required to make calls to this api
-
-
+  secret_key: required to make calls to this api endpoint
 */
 router.post("/update", function updateWalletAmount (req, res) {
   console.log('updateWalletAmount()');

@@ -9,6 +9,7 @@ const AchievementsManager = require('../achievements-manager');
 Creates the user and adds it to the database.
 
 TYPE: POST
+
 ENDPOINT: /user/
 
 BODY:
@@ -65,6 +66,7 @@ router.post('/', function addUser(req, res) {
 Logs the user in by authenticating with DB and then creating a session.
 
 TYPE: POST
+
 ENDPOINT: /user/login
 
 BODY:
@@ -119,6 +121,7 @@ router.get("/logout", function loginUser(req, res){
 Checks if the user is already logged in.
 
 TYPE: GET
+
 ENDPOINT: /user/checkauth
 */
 router.get("/checkauth", function checkAuth(req, res){

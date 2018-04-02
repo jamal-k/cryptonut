@@ -10,6 +10,7 @@ const Achievement = require('../models/achievement-model');
 Return a list of all achievements.
 
 TYPE: GET
+
 ENDPOINT: /achievement/username=
 
 PARAMETERS:

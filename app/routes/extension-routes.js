@@ -7,7 +7,7 @@ const Wallet = require('../models/wallet-model');
 
 
 /**
-Returns a list of coins form the coinmarket API the user owns.
+Returns a list of coins from the coinmarket API and the coins the user owns.
 
 TYPE: GET
 ENDPOINT: extension/coins/username=
