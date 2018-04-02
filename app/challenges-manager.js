@@ -14,12 +14,12 @@ module.exports.createUserChallenges = (username) => {
   /** [10k Way] Challenge **/
   var vc1 = new ValueCha({
     name: "10k Way",
-    description: "Everyone is given a 10k USD challenge wallet,<br/> " +
+    description: "Everyone is given a 10k USD challenge wallet, " +
                   "the person with the highest valued wallet at the end of the week wins.",
     progress: "$10000",
     username: username,
     current_amount: "10000",
-    wallet_name: "10kWay"
+    wallet_currency: "USD"
   });
 
   challenges.push(vc1);
@@ -57,19 +57,13 @@ module.exports.createUserChallenges = (username) => {
 */
 module.exports.updateValueCha = (username, wallet_name) => {
 
-  ValueCha.findOne({username: username, name: wallet_name}, (err, wallet) => {
-    if(!wallet){ console.log("updateValueCha() 1: Wallet doesn't exist"); return; }
-    if(err){ console.log("updateValueCha() 2: ", err); return; }
+  ValueCha.updateCha(username, wallet_name, (vc) => {
 
-    ValueCha.updateCha(username, wallet_name, (vc) => {
+    Challenge.findOne({username: vc.username, challenge_id: vc._id}, (err, cha) => {
 
-      Challenge.findOne({username: vc.username, challenge_id: vc._id}, (err, cha) => {
+      cha.progress = vc.progress;
 
-        cha.progress = vc.progress;
-
-        cha.save((err) => console.log("updateValueCha() 3: ", err));
-      });
-
+      cha.save((err) => console.log("updateValueCha() 3: ", err));
     });
 
   });
@@ -121,7 +115,7 @@ function startValueCha1Challenge(username, callback){
     progress: "$10000",
     username: username,
     current_amount: "10000",
-    wallet_name: "10kWay"
+    wallet_currency: "USD"
   });
 
 

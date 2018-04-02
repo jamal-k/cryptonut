@@ -74,7 +74,6 @@ router.post("/:username", function tradeCoins (req, res) {
 
             if(add_response == "200: wallet added"){
 
-
               Wallet.findOne({user : user._id, name: req.body.rec_coin}, (err, rec_wallet2) => {
 
                 /* Commit to the trade since all tests have passed */
@@ -101,6 +100,14 @@ router.post("/:username", function tradeCoins (req, res) {
           /* If both wallets are challenge wallets, then they cannot be traded */
           if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency != ""){
             res.status(500).send({msg: "You cannot trade between challenge wallets."});
+            return;
+          }
+
+          /* Can't trade between the same currencies */
+          if(rec_wallet.name == send_wallet.name ||
+            send_wallet.challenge_currency == rec_wallet.name ||
+            rec_wallet.challenge_currency == send_wallet.name){
+            res.status(500).send({msg: "You cannot trade between the same currencies."});
             return;
           }
 
@@ -149,7 +156,7 @@ function commitTrade(username, send_wallet, rec_wallet, send_amnt, callback){
         axios.get("https://min-api.cryptocompare.com/data/price?fsym=" + send_currency + "&tsyms=" + rec_currency)
           .then(res => {
 
-            var receiving_amount = res.data[rec_currency] * send_amnt;
+            var receiving_amount = (res.data[rec_currency] * send_amnt) * 0.99;
 
             /* Covert the amount to rec_coin, and update the rec_wallet */
             axios.post("http://localhost:3000/wallet/update", {name: rec_wallet.name,
@@ -228,6 +235,7 @@ function createTradeTransaction(username, send_wallet_name, send_wallet_balance,
 }
 
 function handleChallenges(username, send_wallet_name, send_wallet_balance, rec_wallet_name, send_amount, rec_amount){
+  console.log("names: ", send_wallet_name, " AND ", rec_wallet_name)
   ChallengesManager.updateValueCha(username, send_wallet_name);
   ChallengesManager.updateValueCha(username, rec_wallet_name);
 }

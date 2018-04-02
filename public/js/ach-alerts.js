@@ -1,4 +1,7 @@
 var socket = io();
 socket.on('achievement', function(data) {
-        console.log('The server has a message for you: ' + data.msg);
+  console.log("GOT ACHIEVEMENT: ", data);
+  if(data.msg == "completed"){
+    alerty.alert("The " + data.name + " achievement has been completed! ", {title: "Achievement Completed"});
+  }
 });

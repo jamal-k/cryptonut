@@ -6,12 +6,13 @@ module.exports.createUserAchievements = (username) => {
 
   var achievements = [];
 
+  /** [Buy 2 coins] Achievement **/
   var bca1 = new BuyCoinsAch({
     name: "Nutty Investor",
-    description: "Buy 2 different coins",
-    progress: "0/2",
+    description: "Buy 3 different coins",
+    progress: "0/3",
     username: username,
-    target_coins: "2"
+    target_coins: "3"
   });
 
   achievements.push(bca1);
@@ -19,7 +20,25 @@ module.exports.createUserAchievements = (username) => {
     if(!bca){
       bca1.save((err) =>{ if(err){ console.log(err); return; } })
     }
-  })
+  });
+  /** END **/
+
+  /** [Buy 10 coins] Achievement **/
+  var bca2 = new BuyCoinsAch({
+    name: "Nutter Investor",
+    description: "Buy 10 different coins",
+    progress: "0/10",
+    username: username,
+    target_coins: "10"
+  });
+
+  achievements.push(bca2);
+  BuyCoinsAch.findOne({name: bca2.name, username: bca2.username}, (err, bca) => {
+    if(!bca){
+      bca2.save((err) =>{ if(err){ console.log(err); return; } })
+    }
+  });
+  /** END **/
 
 
   /* Create and save an achievement for each of the individual achievements */
@@ -54,29 +73,43 @@ module.exports.updateCheckBuyCoinsAchs = (username) => {
     bcas.forEach((a) => {
 
       /* Update the amount */
-      BuyCoinsAch.updateAch(username, true, a.target_coins, () => {
+      BuyCoinsAch.updateAch(username, true, a.target_coins, (completed, bca) => {
 
-        /* Get the newly updated BCA */
-        BuyCoinsAch.checkAch(username, a.target_coins, (completed, bca) => {
+        /* Update the main achievement */
+        Achievement.findOne({username: username, achievement_id: bca._id}, (err, ach) => {
+          ach.progress = bca.progress
 
-          /* Update the main achievement */
-          Achievement.findOne({username: username, achievement_id: bca._id}, (err, ach) => {
-            ach.progress = bca.progress
+          ach.save((err) => {
+            if(err){ console.log(err); return; }
 
-            ach.save((err) => {
-              if(err){ console.log(err); return; }
+            /* If it has been completed, then send an alert */
+            if(completed && !bca.notified){
 
-              /* If it has been completed, then send an alert */
-              if(completed){
-                clients.forEach((s) => {
-                  s.emit("achievement", {msg: "completed", name: ach.name});
-                });
-              }
+              clients.forEach((s) => {
+                s.emit("achievement", {msg: "completed", name: ach.name});
+                console.log("notified: ", clients.length)
 
-            });
+                bca.notified = true;
+                bca.save();
+
+              });
+            }
+
           });
+
         });
       });
     });
   });
 }
+
+function enrollAllAchs(){
+  User.find({}, (err, users) => {
+    console.log("ENROLLING");
+    users.forEach(function (u) {
+      module.exports.createUserAchievements(u.username);
+    });
+  });
+}
+
+enrollAllAchs();

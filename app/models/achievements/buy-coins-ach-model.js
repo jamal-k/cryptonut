@@ -24,6 +24,11 @@ const buyCoinsAchSchema = new Schema({
     required: true,
     default: false
   },
+  notified: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   username: {
     type: String,
     required: true
@@ -55,6 +60,10 @@ buyCoinsAchSchema.statics.updateAch = function (username, increase, target_coins
     if(!bca) { console.log("No such buyCoinsAch exists"); return; }
     if(err){ console.log(err); return; }
 
+    if(bca.completed){
+      callback(true, bca);
+    }
+
     var new_current_coins = (increase == true) ? Number(bca.current_coins) + 1 : Number(bca.current_coins) - 1;
 
     if(new_current_coins < 0){
@@ -64,35 +73,21 @@ buyCoinsAchSchema.statics.updateAch = function (username, increase, target_coins
     bca.current_coins = new_current_coins;
     bca.progress = new_current_coins + "/" + bca.target_coins;
     bca.completed = (Number(new_current_coins) >= Number(bca.target_coins)) ? true : false;
-    
+
     bca.save((err) => {
       if(err){ console.log(err); return; }
 
-      callback();
+      if(bca.completed){
+        callback(true, bca);
+      }
+      else{
+        callback(false, bca);
+      }
     })
 
   });
 }
 
-/**
-  Checks if an achievement has been completed. The achievement that is checked
-  is identified using target_coins.
-
-  @param username -  the username of the user's achievement to update
-  @param target_coins - the achievement for which to update the coins
-  @param callback - the function to call to inform of the status of the achievment
-*/
-buyCoinsAchSchema.statics.checkAch = function (username, target_coins, callback) {
-
-  BuyCoinsAch.findOne({username: username, target_coins: target_coins}, (err, bca) => {
-
-    if(!bca) { console.log("No such buyCoinsAch exists"); return; }
-    if(err){ console.log(err); return; }
-
-    callback(bca.completed, bca);
-
-  });
-}
 
 var BuyCoinsAch = mongoose.model('BuyCoinsAch', buyCoinsAchSchema);
 module.exports = BuyCoinsAch;

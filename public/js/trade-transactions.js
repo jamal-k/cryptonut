@@ -47,7 +47,9 @@ class TradeTransactionsContainer extends React.Component {
         });
       }
     }).catch(err => {
-      console.log(err.response);
+      this.setState({
+        tradetrans: []
+      });
     });
   }
 

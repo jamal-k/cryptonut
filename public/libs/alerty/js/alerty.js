@@ -109,9 +109,10 @@
      * @return  {String}
      */
     setUid: function(prefix) {
-      do prefix += Math.floor(Math.random() * 1000000);
-      while (document.getElementById(prefix));
-      return prefix;
+      var id = "";
+      do id += Math.floor(Math.random() * 1000000);
+      while (document.getElementById(prefix + "-" + id));
+      return id;
     }
   };
 
@@ -137,17 +138,14 @@
       // html templates
       template: '<div class="alerty-overlay" tabindex="-1"></div>'+
                 '<div class="alerty">'+
-                  '<div class="alerty-title"></div>'+
-                  '<div class="alerty-content">'+
-                    '<p class="alerty-message"></p>'+
-                    '<div class="alerty-prompt">'+
-                      '<input type="text" placeholder="" value="">'+
-                      '<div class="input-line"></div>'+
-                    '</div>'+
+                  '<div class="alerty-title" ></div>'+
+                  '<div class="alerty-content" >'+
+                    '<p class="alerty-message" ></p>'+
+
                   '</div>'+
-                  '<div class="alerty-action">'+
-                    '<a class="btn-cancel"></a>'+
-                    '<a class="btn-ok"></a>'+
+                  '<div class="alerty-action" >'+
+                    '<a class="btn-cancel" ></a>'+
+                    '<a class="btn-ok" ></a>'+
                   '</div>'+
                 '</div>',
 
@@ -175,13 +173,31 @@
 
         // if previous modal is open, remove it and immediately callback
         if ($oldModal) {
-          commonUse.removeElement($oldModal);
-          var _callback = this.previousCallback;
-          if (_callback) _callback();
+          console.log("REMOVEDDDDDD");
+          //commonUse.removeElement($oldModal)
+
+          //var _callback = this.previousCallback;
+          //if (_callback) _callback();
         }
 
+        var a_id = commonUse.setUid('alerty');
+
+        var template2 = '<div class="alerty-overlay" id="alerty-overlay-' + a_id + '" tabindex="-1"></div>'+
+                  '<div class="alerty" id="alerty-' + a_id + '">'+
+                    '<div class="alerty-title" id="alerty-title-' + a_id + '"></div>'+
+                    '<div class="alerty-content" id="alerty-content-' + a_id + '">'+
+                      '<p class="alerty-message" id="alerty-message-' + a_id + '"></p>'+
+
+                    '</div>'+
+                    '<div class="alerty-action" id="alerty-action-' + a_id + '">'+
+                      '<a class="btn-cancel" id="btn-cancel-' + a_id + '"></a>'+
+                      '<a class="btn-ok" id="btn-ok-' + a_id + '"></a>'+
+                    '</div>'+
+                  '</div>';
+
         var $wrapper = document.createElement('div');
-        $wrapper.innerHTML = this.template;
+        $wrapper.innerHTML = template2;
+
 
         // append alerty to body
         while ($wrapper.firstChild) {
@@ -189,18 +205,18 @@
         }
 
         // cache alerty dom for next use
-        var $modal = document.querySelector('.alerty');
-        var $overlay = document.querySelector('.alerty-overlay');
-        var $title = $modal.querySelector('.alerty-title');
-        var $message = $modal.querySelector('.alerty-message');
-        var $btnArea = $modal.querySelector('.alerty-action');
-        var $btnOk = $modal.querySelector('.btn-ok');
-        var $btnCancel = $modal.querySelector('.btn-cancel');
-        var $prompt = $modal.querySelector('.alerty-prompt');
-        var $input = $prompt.querySelector('input');
+        var $modal = document.querySelector('#alerty-' + a_id);
+        var $overlay = document.querySelector('#alerty-overlay-' + a_id);
+        var $title = $modal.querySelector('#alerty-title-' + a_id);
+        var $message = $modal.querySelector('#alerty-message-' + a_id);
+        var $btnArea = $modal.querySelector('#alerty-action-' + a_id);
+        var $btnOk = $modal.querySelector('#btn-ok-' + a_id);
+        var $btnCancel = $modal.querySelector('#btn-cancel-' + a_id);
+        //var $prompt = $modal.querySelector('.alerty-prompt');
+        //var $input = $prompt.querySelector('input');
 
         // set uid
-        $modal.id = commonUse.setUid('alerty');
+
         $overlay.id = 'overlay-'+$modal.id;
 
         // animation show alerty
@@ -210,15 +226,15 @@
 
         if (opts && opts.time) this.defaults.time = opts.time; // handle time if set
 
-        if (type !== 'prompt') {
-          commonUse.removeElement($prompt); // other type do not need
-        } else {
-          $input.focus(); // auto focus input if type prompt
-
-          if(opts && opts.inputType) $input.setAttribute('type', opts.inputType); // handle input type, such as 'password'
-          if(opts && opts.inputPlaceholder) $input.setAttribute('placeholder', opts.inputPlaceholder); // handle input placeholder
-          if(opts && opts.inputValue) $input.setAttribute('value', opts.inputValue); // handle input default value
-        }
+        // if (type !== 'prompt') {
+        //   commonUse.removeElement($prompt); // other type do not need
+        // } else {
+        //   $input.focus(); // auto focus input if type prompt
+        //
+        //   if(opts && opts.inputType) $input.setAttribute('type', opts.inputType); // handle input type, such as 'password'
+        //   if(opts && opts.inputPlaceholder) $input.setAttribute('placeholder', opts.inputPlaceholder); // handle input placeholder
+        //   if(opts && opts.inputValue) $input.setAttribute('value', opts.inputValue); // handle input default value
+        // }
 
         if (type === 'toasts') {
           this.previousCallback = onOk;  // cache callback
@@ -233,7 +249,8 @@
           if (opts && opts.bgColor) $modal.style.backgroundColor = opts.bgColor;
           if (opts && opts.fontColor) $message.style.color =opts.fontColor;
 
-        } else {
+        }
+        else {
           commonUse.addClass(document.body, 'no-scrolling'); // body no scorll
           (opts && opts.title) ? $title.innerHTML = opts.title : commonUse.removeElement($title); // handle title if set
           (opts && opts.okLabel) ? $btnOk.innerHTML = opts.okLabel : $btnOk.innerHTML = this.defaults.okLabel; // handle ok text if set
@@ -245,7 +262,7 @@
             commonUse.removeElement($btnCancel); // toasts and alery type do not need cancel btn
           }
         }
-
+        console.log("BINDING");
         this.bindEvent($modal, onOk, onCancel); // see next
       },
 

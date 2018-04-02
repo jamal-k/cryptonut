@@ -49,6 +49,8 @@ function Wallet(props) {
   );
 }
 
+var wallet_timeout = null;
+
 /**
 All the coins that will be displayed in the select options.
 */
@@ -66,12 +68,23 @@ class WalletContainer extends React.Component {
 
   /* Get the given user's wallets */
   refreshWallets(username) {
+
+    if (!getCookie("username")) {
+      return;
+    }
+
     axios.get("http://localhost:3000/wallet/" + username).then(res => {
       if (res.status == 200) {
         this.setState({
           wallets: res.data
         });
+
+        if (wallet_timeout) {
+          wallet_timeout = null;
+        }
       }
+    }).catch(err => {
+      wallet_timeout = setTimeout(() => this.refreshWallets(username), 2000);
     });
   }
 

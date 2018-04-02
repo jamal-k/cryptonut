@@ -1,7 +1,7 @@
 function Challenge(props) {
   return React.createElement(
     "tr",
-    { onClick: props.onClick },
+    { className: "challenge_row", onClick: props.onClick },
     React.createElement(
       "td",
       { className: "currency" },
@@ -16,7 +16,11 @@ function Challenge(props) {
     React.createElement(
       "td",
       { className: "price" },
-      props.description
+      React.createElement(
+        "p",
+        null,
+        props.description
+      )
     ),
     React.createElement(
       "td",

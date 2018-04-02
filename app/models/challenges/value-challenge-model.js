@@ -36,6 +36,11 @@ const valueChaSchema = new Schema({
   },
   wallet_name: {
     type: String,
+    required: false,
+    default: ""
+  },
+  wallet_currency: {
+    type: String,
     required: true
   }
 });
@@ -44,14 +49,20 @@ valueChaSchema.pre('save', function(next) {
 
   User.findOne({username: this.username}, (err, user) => {
     if(user){
-      Wallet.findOne({username: user._id, name: this.wallet_name}, (err, wallet) => {
+
+      var wallet_name = this.name.replace(/\s+/, "")  + "[" + this.wallet_currency + "]"
+      this.wallet_name = wallet_name;
+      console.log("testing against", wallet_name)
+
+      Wallet.findOne({user: user._id, name: wallet_name}, (err, wallet) => {
 
         if(!wallet){
+          console.log("NOT FOUND WALLET")
           var w = new Wallet({
-            name: this.wallet_name,
+            name: wallet_name,
             amount: this.current_amount,
             user: user._id,
-            challenge_currency: "USD"
+            challenge_currency: this.wallet_currency
           });
 
           w.save((err) => {
@@ -61,6 +72,7 @@ valueChaSchema.pre('save', function(next) {
           })
         }
         else{
+          console.log("FOUND WALLET")
           next();
         }
 
@@ -86,24 +98,35 @@ valueChaSchema.pre('save', function(next) {
 */
 valueChaSchema.statics.updateCha = function (username, wallet_name, callback) {
 
-  ValueCha.findOne({username: username, wallet_name: wallet_name}, (err, vc) => {
+  User.findOne({username: username}, (err, user) => {
+    if(!user){ console.log("updateCha() 1: User doesn't exist"); return; }
+    if(err){ console.log("updateCha() 2: ", err); return; }
 
-    if(!vc) { console.log("No such ValueCha exists"); return; }
-    if(err){ console.log(err); return; }
+    ValueCha.findOne({username: username, wallet_name: wallet_name}, (err, vc) => {
 
-    Wallet.findOne({username: username, name: wallet_name}, (err, wallet) => {
-      vc.current_amount = wallet.amount;
-      vc.progress = "$" + wallet.amount;
+      if(!vc){ console.log("updateCha() 3: Wallet doesn't exist"); return; }
+      if(err){ console.log("updateCha() 4: ", err); return; }
 
-      vc.save((err) => {
-        if(err){ console.log(err); return; }
+      Wallet.findOne({user: user._id, name: wallet_name}, (err, wallet) => {
+        if(!wallet){ console.log("updateCha() 5: Wallet doesn't exist"); return; }
+        if(err){ console.log("updateCha() 6: ", err); return; }
 
-        callback(vc);
+        vc.current_amount = wallet.amount;
+        vc.progress = "$" + wallet.amount;
+
+        vc.save((err) => {
+          if(err){ console.log(err); return; }
+
+          callback(vc);
+        });
+
       });
 
     });
 
   });
+
+
 }
 
 /**

@@ -126,6 +126,7 @@ router.post("/", function addWallet (req, res){
           if(err){ console.log("addWallet() 3: ", err); return; }
 
           res.send("200: wallet added");
+          console.log("WALLET ADDED");
           AchievementsManager.updateCheckBuyCoinsAchs(user.username);
 
         });

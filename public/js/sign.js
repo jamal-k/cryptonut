@@ -79,6 +79,7 @@ $("#logout_btn").on("click", () =>{
     .then(res => {
       console.log(res);
       if(res.data.msg == "200: logout success"){
+        deleteCookie("username")
         displayTopHeaders(false, "");
       }
 

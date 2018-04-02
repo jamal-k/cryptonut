@@ -1337,5 +1337,23 @@ ul a, ul a:focus, ul a:hover {
 }
 
 .button_start_challenge {
-  .margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.challenges_container{
+
+}
+
+.challenges_container>table>tr>td>p{
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+}
+
+.challenges_container>table>tr{
+  background: #252525;
+}
+
+.challenges_container>table>tr:hover{
+  background: #353535;
 }

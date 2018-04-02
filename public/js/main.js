@@ -4,6 +4,10 @@ function getCookie(name) {
     return match ? match[1] : null;
 }
 
+var deleteCookie = function(name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
 function getCollection(callback) {
 
   axios.get("https://api.coinmarketcap.com/v1/ticker/")
@@ -11,6 +15,24 @@ function getCollection(callback) {
       callback(res.data);
     });
 }
+
+
+/**
+  Search coins
+*/
+$("#search_coins_fld").keyup((e) => {
+
+    filter = e.target.value.toUpperCase();
+    tr = $("#all_coins > tbody > tr");
+    for (i = 0; i < tr.length; i++) {
+        if (tr[i].getElementsByTagName("p")[0].innerHTML.toUpperCase().indexOf(filter) > -1 ||
+        tr[i].getElementsByTagName("p")[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+});
 
 function addUser() {
 

@@ -114,6 +114,8 @@ class SideBarCoins extends React.Component {
 
 ReactDOM.render(React.createElement(SideBarCoins, null), document.getElementById('all_coins'));
 
+var coins_timeout = null;
+
 /**
 All the coins that will be displayed in the select options.
 */
@@ -122,6 +124,7 @@ class SelectOptionsCoins extends React.Component {
     super(props);
     this.state = {
       coins: [],
+      my_coins: [],
       selected_coin_img: ""
     };
 
@@ -134,12 +137,32 @@ class SelectOptionsCoins extends React.Component {
   Get all coins from the 3rd party API
   */
   refreshCoins() {
-    axios.get("https://api.coinmarketcap.com/v1/ticker/").then(res => {
+
+    if (!getCookie("username")) {
+      return;
+    }
+
+    axios.get("http://localhost:3000/extension/coins/" + getCookie("username")).then(res => {
 
       this.setState({
         coins: res.data,
         selected_coin_img: "./index_files/" + this.props.default_coin.toLowerCase() + ".svg"
       });
+    }).catch(err => {
+      console.log("retreieve coins rerror");
+      console.log(err.response);
+    });
+
+    axios.get("http://localhost:3000/wallet/" + getCookie("username")).then(res => {
+      this.setState({
+        my_coins: res.data
+      });
+
+      if (coins_timeout) {
+        coins_timeout = null;
+      }
+    }).catch(err => {
+      coins_timeout = setTimeout(() => this.refreshCoins(), 2000);
     });
   }
 
@@ -153,67 +176,106 @@ class SelectOptionsCoins extends React.Component {
     var other_selected_coin = $("#" + this.props.other_select_id).val();
     var val = e.target.value;
 
+    if (selected_coin.indexOf("[") != -1) {
+      selected_coin = selected_coin.substring(selected_coin.indexOf('[') + 1, selected_coin.indexOf(']'));
+    }
+
+    if (other_selected_coin.indexOf("[") != -1) {
+      other_selected_coin = other_selected_coin.substring(other_selected_coin.indexOf('[') + 1, other_selected_coin.indexOf(']'));
+    }
+
     axios.get("https://min-api.cryptocompare.com/data/price?fsym=" + selected_coin + "&tsyms=" + other_selected_coin).then(res => {
-      console.log("KEYEDL ", res.data[other_selected_coin]);
       $("#" + this.props.other_amount_fld_id).val(res.data[other_selected_coin] * val);
     });
   }
 
   /**
-  Display the coin image on the option picker when a coin is selected.
+    Display the coin image on the option picker when a coin is selected.
   */
   onCoinSelect(e) {
-
-    $.get("./index_files/" + e.target.value.toLowerCase() + ".svg").done(function () {
-      this.setState({
-        selected_coin_img: "./index_files/" + e.target.value.toLowerCase() + ".svg"
-      });
-    }).fail(function () {
-      this.setState({
-        selected_coin_img: "./index_files/usd.svg"
-      });
+    this.setState({
+      selected_coin_img: "./index_files/" + e.target.value.toLowerCase() + ".svg"
     });
+
+    $("#" + this.props.amount_fld_id).val("");
+    $("#" + this.props.other_amount_fld_id).val("");
   }
 
   render() {
-    return React.createElement(
-      "div",
-      { className: "glow_text_box" },
-      React.createElement("input", { id: this.props.amount_fld_id, onKeyUp: e => this.calculateAmount(e), type: "number", placeholder: "Amount" }),
-      React.createElement("img", { src: this.state.selected_coin_img, className: "select_coin_img" }),
-      React.createElement(
-        "select",
-        { id: this.props.select_id, className: "nav_select coin_select", onChange: e => this.onCoinSelect(e) },
+    /* Only display user's owned coins to send */
+    if (this.props.amount_fld_id == "send_amount_fld") {
+      return React.createElement(
+        "div",
+        { className: "glow_text_box" },
+        React.createElement("input", { id: this.props.amount_fld_id, onKeyUp: e => this.calculateAmount(e), type: "number", placeholder: "Amount" }),
+        React.createElement("img", { src: this.state.selected_coin_img, onError: e => {
+            e.target.src = "/index_files/usd.svg";
+          }, className: "select_coin_img" }),
         React.createElement(
-          "option",
-          { value: "USD" },
-          "USD"
-        ),
-        this.state.coins.map((coin, i) => {
-          if (coin.symbol == this.props.default_coin) {
-            return React.createElement(
-              "option",
-              { value: coin.symbol, selected: "selected" },
-              coin.symbol
-            );
-          }
-          /* If it's the first element in the list, then set as selected */
-          else {
+          "select",
+          { id: this.props.select_id, className: "nav_select coin_select", onChange: e => this.onCoinSelect(e) },
+          this.state.my_coins.map((coin, i) => {
+
+            /* If it's the first element in the list, then set as selected */
+            if (coin.name == this.props.default_coin) {
               return React.createElement(
                 "option",
-                { value: coin.symbol },
-                coin.symbol
+                { value: coin.name, selected: "selected" },
+                coin.name
+              );
+            } else {
+              return React.createElement(
+                "option",
+                { value: coin.name },
+                coin.name
               );
             }
-        })
-      )
-    );
+          })
+        )
+      );
+    }
+    /* Only display all coins to send */
+    else {
+        return React.createElement(
+          "div",
+          { className: "glow_text_box" },
+          React.createElement("input", { id: this.props.amount_fld_id, onKeyUp: e => this.calculateAmount(e), type: "number", placeholder: "Amount" }),
+          React.createElement("img", { src: this.state.selected_coin_img, onError: e => {
+              e.target.src = "/index_files/usd.svg";
+            }, className: "select_coin_img" }),
+          React.createElement(
+            "select",
+            { id: this.props.select_id, className: "nav_select coin_select", onChange: e => this.onCoinSelect(e) },
+            React.createElement(
+              "option",
+              { value: "USD" },
+              "USD"
+            ),
+            this.state.coins.map((coin, i) => {
+              /* If it's the first element in the list, then set as selected */
+              if (coin.symbol == this.props.default_coin) {
+                return React.createElement(
+                  "option",
+                  { value: coin.symbol, selected: "selected" },
+                  coin.symbol
+                );
+              } else {
+                return React.createElement(
+                  "option",
+                  { value: coin.symbol },
+                  coin.symbol
+                );
+              }
+            })
+          )
+        );
+      }
   }
 }
 
-ReactDOM.render(React.createElement(SelectOptionsCoins, { amount_fld_id: "send_amount_fld", default_coin: "USD",
+var send_amount_main = ReactDOM.render(React.createElement(SelectOptionsCoins, { amount_fld_id: "send_amount_fld", default_coin: "USD",
   other_amount_fld_id: "rec_amount_fld", select_id: "send_select", other_select_id: "rec_select" }), document.getElementById('to_send_box'));
 
-ReactDOM.render(React.createElement(SelectOptionsCoins, { amount_fld_id: "rec_amount_fld", default_coin: "BTC",
+var rec_amount_main = ReactDOM.render(React.createElement(SelectOptionsCoins, { amount_fld_id: "rec_amount_fld", default_coin: "BTC",
   other_amount_fld_id: "send_amount_fld", select_id: "rec_select", other_select_id: "send_select" }), document.getElementById('to_receive_box'));
 

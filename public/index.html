@@ -125,7 +125,7 @@
 						<div class="search-bar overflow-hide">
 
 							<div class="input-group">
-								<input type="text" class="" placeholder="Search Coins" onkeyup="filterCoin(this,'all_coins')">
+								<input type="text" class="" placeholder="Search Coins" id="search_coins_fld">
 							</div>
 						</div>
 
@@ -287,7 +287,7 @@
 
 						</form>
 
-						<p>There is a <span style="color:#ff6634">0.5%</span> fee on every trade.</p>
+						<p>There is a <span style="color:#ff6634">1%</span> fee on every trade.</p>
 						<p style="font-size: 13px; letter-spacing: 0.03em; color: rgb(161, 174, 197); font-weight: normal; text-align: center; margin-top: 11px;">
 							Trade the simulated crypto in your wallet for other currencies.
 						</p>
@@ -318,7 +318,7 @@
 		<!-------------------------------------------------------------------------->
 
 		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="Challenges">
-			<div id="challenges_container"></div>
+			<div class="challenges_container" id="challenges_container"></div>
 		</div>
 
 		<div class="tabcontent grad_bg panel middle-content" style="width:100%;" id="SelectedChallenge">
@@ -383,6 +383,12 @@
 
 			$("#" + tabName)[0].classList.add("panel_target");
 			elmnt.focus();
+
+			/* If the trade button was clicked, then refresh coins */
+	    if(elmnt.id == "open_trade_btn"){
+	      send_amount_main.refreshCoins();
+	      rec_amount_main.refreshCoins();
+	    }
 		}
 
 		$("#home_btn")[0].click();
@@ -399,11 +405,11 @@
 
 	<link rel="stylesheet" type="text/css" href="libs/alerty/css/alerty.css">
 	<script src="libs/alerty/js/alerty.js"></script>
+	<script src="./js/main.js"></script>
 	<script src="./js/coins.js"></script>
 	<script src="./js/headers.js"></script>
 	<script src="./js/trade-transactions.js"></script>
 	<script src="./js/wallets.js"></script>
-	<script src="./js/main.js"></script>
 	<script src="./js/sign.js"></script>
 	<script src="./js/trade.js"></script>
 	<script src="./js/achievements.js"></script>

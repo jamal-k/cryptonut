@@ -17,7 +17,7 @@ PARAMETERS:
   name: the unique name of the challenges to return
 
 RESPONSE:
-  achievements: a list of achievements of the given user
+  challenges: a list of challenges with the given name
 */
 router.get("/:name", function getChallenges (req, res) {
   console.log('getChallenges()');
@@ -27,7 +27,7 @@ router.get("/:name", function getChallenges (req, res) {
     return;
   }
 
-  Challenge.find({name: req.params.name}, (err, chs) => {
+  Challenge.find({name: req.params.name}, null, {sort: {progress: -1}}, (err, chs) => {
 
     if(!chs){ res.status(500).send({msg: "No challenges exist with the given name."}); return; }
     if(err){ console.log(err); return; }
@@ -92,21 +92,18 @@ router.post("/", function startChallengeForUser (req, res) {
     if(!user){ res.status(500).send({msg: "User does not exist to start challenge."}); return; }
     if(err){ console.log("startChallengeForUser() 1: ", err); return; }
 
-    console.log("FOIND USER")
 
     Challenge.findOne({username: user.username, name: req.body.name}, (err, challenge) => {
       if(err){ console.log("startChallengeForUser() 2: ", err); return; }
 
       if(challenge){
-        res.status(500).send({msg: "User does not exist to start challenge."})
-        console.log("exust ch")
+        res.status(500).send({msg: "Challenge has already been started."})
       }
       else{
         ChallengesManager.startChallenge(req.body.name, user.username, (cm_resp) => {
 
           if(cm_resp == "200"){
-            console.log("start")
-            res.send({msg: "200: challenge started"});
+            res.send({msg: cm_resp});
           }
           else{
             console.log("failed")

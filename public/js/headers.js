@@ -85,7 +85,7 @@ class TopBarContainer extends React.Component {
       achs.refreshAchievements(getCookie("username"));
     }
 
-    /* If the achievements button was clicked, then refresh achievements */
+    /* If the challenges button was clicked, then refresh challenges */
     if (e.target.getAttribute("id") == "challenges_btn") {
       chas.refreshChallenges();
     }

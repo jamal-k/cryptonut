@@ -39,6 +39,10 @@ app.use("/achievement", achievement);
 const challenge = require('./app/routes/challenge-routes');
 app.use("/challenge", challenge);
 
+/**** Extension Routes ****/
+const extension = require('./app/routes/extension-routes');
+app.use("/extension", extension);
+
 /** Setup socket.io **/
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
@@ -51,8 +55,10 @@ io.on('connection', function (socket) {
 
   socket.on('disconnect', function () {
     console.log('A client is disconnected!');
+    console.log("LENGTH: ", clients.length)
     var i = clients.indexOf(socket);
     clients.splice(i, 1);
+    console.log("AFTER LENGTH: ", clients.length)
   });
 
 });
