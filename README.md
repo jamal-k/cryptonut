@@ -140,11 +140,15 @@ We will integrate the list of currencies returned by the API by providing market
       send_amount: the amount of coins we are trading
 
     RESPONSE:
-      msg: the message
-      send_coin: the coin sent
-      rec_coin: the coin received
-      rec_amount: they amount of the coin received
-      send_balance: the balance left for the sent coin
+      Code 200 Success: 
+        Content: [ {
+        msg: the message
+        send_coin: the coin sent
+        rec_coin: the coin received
+        rec_amount: they amount of the coin received
+        send_balance: the balance left for the sent coin  } ]
+      Code 500 Internal Server Error: 
+        Content: { msg: "[error message]" }
 
 ### Get All Trade Transactions
 
