@@ -10,6 +10,18 @@ Users can open a simulated trading account to purchase and trade various cryptoc
 
 The Cryptocurrency Market Capitalizations API will be used to acquire and update market data, including prices for numerous cryptocurrencies. Additional information such as volume and historical prices will also be provided for market analytics. Market data received from the API will be displayed to users in a form that allows for easy comparison between prices, to assist investment decisions.
 
+# Usage
+
+Start mongodb server:
+
+    ./mongod --port 3001
+
+Start nodejs server:
+
+    node server.js
+
+Access URL: http://localhost:3000
+
 # API Use
 
 We selected the coinmarketcap API for our project:
