@@ -40,7 +40,7 @@ class TradeTransactionsContainer extends React.Component {
 
   /* Get the given user's wallets */
   refreshTradeTrans(username, wallet_name) {
-    axios.get("http://localhost:5000/trade/transactions/" + username + "/" + wallet_name).then(res => {
+    axios.get("https://cryptonut.herokuapp.com/trade/transactions/" + username + "/" + wallet_name).then(res => {
       if (res.status == 200) {
         this.setState({
           tradetrans: res.data

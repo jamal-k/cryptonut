@@ -36,7 +36,7 @@ $("#search_coins_fld").keyup((e) => {
 
 function addUser() {
 
-  axios.post("http://localhost:5000/user", {name: "test ff", username: "test2", password: "lol"})
+  axios.post("https://cryptonut.herokuapp.com/user", {name: "test ff", username: "test2", password: "lol"})
     .then(res => {
       console.log(res.data);
       addWallet();
@@ -45,7 +45,7 @@ function addUser() {
 
 function addWallet() {
 
-  axios.post("http://localhost:5000/wallet/", {name: "BTC", amount: 0.4444, username: "test2"})
+  axios.post("https://cryptonut.herokuapp.com/wallet/", {name: "BTC", amount: 0.4444, username: "test2"})
     .then(res => {
       console.log(res.data);
       getWallets();
@@ -54,7 +54,7 @@ function addWallet() {
 
 function getWallets() {
 
-  axios.get("http://localhost:5000/wallet/lolddsr")
+  axios.get("https://cryptonut.herokuapp.com/wallet/lolddsr")
     .then(res => {
       console.log(res.data);
     })

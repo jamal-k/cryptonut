@@ -25,7 +25,7 @@ class AchievementContainer extends React.Component {
 
   /* Get the given user's wallets */
   refreshAchievements(username){
-    axios.get("http://localhost:5000/achievement/" + username)
+    axios.get("https://cryptonut.herokuapp.com/achievement/" + username)
       .then(res => {
         if(res.status == 200){
           this.setState({

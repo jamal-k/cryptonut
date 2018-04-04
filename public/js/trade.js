@@ -9,7 +9,7 @@ function onTradeBtnClick(){
 
   if(send_amount_fld != ""){
 
-    axios.post("http://localhost:5000/trade/" + getCookie("username"),
+    axios.post("https://cryptonut.herokuapp.com/trade/" + getCookie("username"),
      {send_coin: send_coin, rec_coin: rec_coin, send_amount: send_amount_fld})
       .then(res => {
         if(res.data.msg == "200: trade success"){

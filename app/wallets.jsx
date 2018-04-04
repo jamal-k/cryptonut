@@ -48,7 +48,7 @@ class WalletContainer extends React.Component {
       return;
     }
 
-    axios.get("http://localhost:5000/wallet/" + username)
+    axios.get("https://cryptonut.herokuapp.com/wallet/" + username)
       .then(res => {
         if(res.status == 200){
           this.setState({

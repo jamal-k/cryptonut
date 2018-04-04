@@ -42,7 +42,7 @@ class TopBarContainer extends React.Component {
     Check if a user is authenticated when the username is clicked.
   */
   checkAuth(){
-    axios.get("http://localhost:5000/user/checkauth")
+    axios.get("https://cryptonut.herokuapp.com/user/checkauth")
       .then(res => {
         console.log("CHECKAUTH(): " + res.data);
     });
@@ -52,7 +52,7 @@ class TopBarContainer extends React.Component {
   Refreshes the USD balance displayed in the heahders.
   */
   refreshUSDBalance(){
-    axios.get("http://localhost:5000/wallet/" + getCookie("username") + "/" + "USD")
+    axios.get("https://cryptonut.herokuapp.com/wallet/" + getCookie("username") + "/" + "USD")
       .then(res => {
         this.setState({
           usd_balance: res.data.amount

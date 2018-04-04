@@ -132,7 +132,7 @@ router.post("/:username", function tradeCoins (req, res) {
 });
 
 function createEmptyWallet(username, name, callback){
-  axios.post("http://localhost:5000/wallet/", {name: name, amount: 0, username: username, secret_key: "clock50boisonly"})
+  axios.post("https://cryptonut.herokuapp.com/wallet/", {name: name, amount: 0, username: username, secret_key: "clock50boisonly"})
     .then(res => {
       callback(res.data);
   });
@@ -146,7 +146,7 @@ function commitTrade(username, send_wallet, rec_wallet, send_amnt, callback){
   var rec_currency = rec_wallet.challenge_currency == "" ? rec_wallet.name : rec_wallet.challenge_currency;
 
   /* Update the sending wallet's amount */
-  axios.post("http://localhost:5000/wallet/update", {name: send_wallet.name,
+  axios.post("https://cryptonut.herokuapp.com/wallet/update", {name: send_wallet.name,
     amount: send_amnt, username: username, negative: true, secret_key: "clock50boisonly"})
 
     .then(res => {
@@ -159,7 +159,7 @@ function commitTrade(username, send_wallet, rec_wallet, send_amnt, callback){
             var receiving_amount = (res.data[rec_currency] * send_amnt) * 0.99;
 
             /* Covert the amount to rec_coin, and update the rec_wallet */
-            axios.post("http://localhost:5000/wallet/update", {name: rec_wallet.name,
+            axios.post("https://cryptonut.herokuapp.com/wallet/update", {name: rec_wallet.name,
               amount: receiving_amount, username: username, negative: false, secret_key: "clock50boisonly"})
 
               .then(res => {
