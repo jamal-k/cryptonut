@@ -2,7 +2,7 @@ function Challenge(props){
   return (
     <tr className="challenge_row" onClick={props.onClick}>
       <td className="currency"><span className="currency_rank">{props.number}</span>
-        <img className="currency_logo_img" src="./home/Challenge_completed.PNG" width="23" height="23" />{props.name}
+        <img className="currency_logo_img" src="../home/Challenge_completed.PNG" width="23" height="23" />{props.name}
       </td>
       <td className="price"><p>{props.description}</p></td>
       <td className="price">{props.progress}</td>
