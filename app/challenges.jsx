@@ -57,6 +57,7 @@ class ChallengeContainer extends React.Component {
     /* Get the selected challenge and display it in the container */
     axios.get("https://cryptonut.herokuapp.com/challenge/" + name)
       .then(res => {
+        res.data.sort((a, b) => parseFloat(a.progress) - parseFloat(b.progress));
         if(res.status == 200){
           console.log("r", res.data);
           ReactDOM.render(<SelectedChallengeContainer challenges={res.data}
