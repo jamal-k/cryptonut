@@ -40,6 +40,74 @@ module.exports.createUserAchievements = (username) => {
   });
   /** END **/
 
+  /** [Buy 15 coins] Achievement **/
+    bca2 = new BuyCoinsAch({
+    name: "Lunutic",
+    description: "Buy 15 different coins",
+    progress: "0/15",
+    username: username,
+    target_coins: "15"
+  });
+
+  achievements.push(bca2);
+  BuyCoinsAch.findOne({name: bca2.name, username: bca2.username}, (err, bca) => {
+    if(!bca){
+      bca2.save((err) =>{ if(err){ console.log(err); return; } })
+    }
+  });
+  /** END **/
+
+  /** [Buy 30 coins] Achievement **/
+    bca2 = new BuyCoinsAch({
+    name: "Coin Hoarder",
+    description: "Buy 30 different coins",
+    progress: "0/30",
+    username: username,
+    target_coins: "30"
+  });
+
+  achievements.push(bca2);
+  BuyCoinsAch.findOne({name: bca2.name, username: bca2.username}, (err, bca) => {
+    if(!bca){
+      bca2.save((err) =>{ if(err){ console.log(err); return; } })
+    }
+  });
+  /** END **/
+
+  /** [Buy 40 coins] Achievement **/
+    bca2 = new BuyCoinsAch({
+    name: "Master Investor",
+    description: "Buy 40 different coins",
+    progress: "0/40",
+    username: username,
+    target_coins: "40"
+  });
+
+  achievements.push(bca2);
+  BuyCoinsAch.findOne({name: bca2.name, username: bca2.username}, (err, bca) => {
+    if(!bca){
+      bca2.save((err) =>{ if(err){ console.log(err); return; } })
+    }
+  });
+  /** END **/
+
+  /** [Buy 50 coins] Achievement **/
+    bca2 = new BuyCoinsAch({
+    name: "Nuttiest Investor",
+    description: "Buy 50 different coins",
+    progress: "0/50",
+    username: username,
+    target_coins: "50"
+  });
+
+  achievements.push(bca2);
+  BuyCoinsAch.findOne({name: bca2.name, username: bca2.username}, (err, bca) => {
+    if(!bca){
+      bca2.save((err) =>{ if(err){ console.log(err); return; } })
+    }
+  });
+  /** END **/
+
 
   /* Create and save an achievement for each of the individual achievements */
   achievements.forEach((a) => {
