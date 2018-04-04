@@ -10,7 +10,7 @@ function Achievement(props) {
         { className: "currency_rank" },
         props.number
       ),
-      React.createElement("img", { className: "currency_logo_img", src: "./home/Challenge_completed.PNG", width: "23", height: "23" }),
+      React.createElement("img", { className: "currency_logo_img", src: "../home/Challenge_completed.PNG", width: "23", height: "23" }),
       props.name
     ),
     React.createElement(
