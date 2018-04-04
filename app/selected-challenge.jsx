@@ -2,7 +2,7 @@ function SelectedChallenge(props){
   return (
     <tr>
       <td className="currency"><span className="currency_rank">{props.number}</span>
-        <img className="currency_logo_img" src="./home/Challenge_completed.PNG" width="23" height="23" />{props.username}
+        <img className="currency_logo_img" src="./home/Challenge_uncompleted.png" width="23" height="23" />{props.username}
       </td>
       <td className="price">{props.progress}</td>
     </tr>
