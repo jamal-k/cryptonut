@@ -167,35 +167,57 @@ function handleChallengeCurrency(res, user, send_wallet, rec_wallet, send_amount
 
   /* If the sending wallet is a challenge wallet, but the receiving isn't */
   if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency == ""){
+
     var w_ccurrency = rec_wallet.name;
     var w_name = send_wallet.name.substring(0, send_wallet.name.indexOf('[')) + "[" + w_ccurrency + "]";
+    Wallet.findOne({user: user._id, name: w_name}, (err, wall) => {
 
-    var w = new Wallet({
-      name: w_name,
-      amount: 0,
-      user: user._id,
-      challenge_currency: w_ccurrency
+      if(wall){
+        axios.post("https://cryptonut.herokuapp.com/trade/" + user.username,
+        {send_coin: send_wallet.name, rec_coin: w_name, send_amount: send_amount, secret_key: "clock50bois"})
+          .then(resp => {
+            console.log(resp);
+            /* Commit to the trade since the receiving wallets exists and all prev test pass */
+            if(resp.data.status == 500){
+              res.status(500).send(resp);
+            }
+            else{
+              res.send(resp.data);
+            }
+        }).catch(err => {
+          console.log(err);
+        });
+      }
+      else{
+        var w = new Wallet({
+          name: w_name,
+          amount: 0,
+          user: user._id,
+          challenge_currency: w_ccurrency
+        });
+
+
+        w.save((err) => {
+          if(err) { console.log("handleChallengeCurrency() 1: ", err); }
+
+          axios.post("https://cryptonut.herokuapp.com/trade/" + user.username,
+          {send_coin: send_wallet.name, rec_coin: w_name, send_amount: send_amount, secret_key: "clock50bois"})
+            .then(resp => {
+              console.log(resp);
+              /* Commit to the trade since the receiving wallets exists and all prev test pass */
+              if(resp.data.status == 500){
+                res.status(500).send(resp);
+              }
+              else{
+                res.send(resp.data);
+              }
+          }).catch(err => {
+            console.log(err);
+          });
+        })
+      }
+
     });
-
-
-    w.save((err) => {
-      if(err) { console.log("handleChallengeCurrency() 1: ", err); }
-
-      axios.post("https://cryptonut.herokuapp.com/trade/" + user.username,
-      {send_coin: send_wallet.name, rec_coin: w_name, send_amount: send_amount, secret_key: "clock50bois"})
-        .then(resp => {
-          console.log(resp);
-          /* Commit to the trade since the receiving wallets exists and all prev test pass */
-          if(resp.data.status == 500){
-            res.status(500).send(resp);
-          }
-          else{
-            res.send(resp.data);
-          }
-      }).catch(err => {
-        console.log(err);
-      });
-    })
 
     return true;
   }
