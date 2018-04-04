@@ -76,6 +76,13 @@ router.post("/:username", function tradeCoins (req, res) {
 
               Wallet.findOne({user : user._id, name: req.body.rec_coin}, (err, rec_wallet2) => {
 
+                var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet2, res.body.send_amount);
+
+                /* If it's a trade between challenge currencies, then it's already been handled */
+                if(challenge){
+                  return;
+                }
+
                 /* Commit to the trade since all tests have passed */
                 commitTrade(user.username, send_wallet, rec_wallet2, req.body.send_amount, (trade_resp) => {
                   if(trade_resp.status == 500){
@@ -97,7 +104,7 @@ router.post("/:username", function tradeCoins (req, res) {
         else if(err){ console.log("tradeCoins() 3: ", err); return; }
         else{
 
-          var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet, rec.body.send_amount);
+          var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet, res.body.send_amount);
 
           /* If it's a trade between challenge currencies, then it's already been handled */
           if(challenge){
