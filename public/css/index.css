@@ -547,6 +547,13 @@ th {
   border-bottom: 1px solid #3f3f3f;
 }
 
+.price_green {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #3f3f3f;
+  color: #00E676;
+}
+
 td:hover {
   cursor: pointer;
 }
