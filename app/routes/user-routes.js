@@ -47,7 +47,7 @@ router.post('/', function addUser(req, res) {
         req.session.userID = u._id
 
         /* Create a default USD Wallet */
-        axios.post("http://localhost:3000/wallet/", {name: "USD", amount: "10000", username: u.username, secret_key: "clock50boisonly"})
+        axios.post("http://localhost:5000/wallet/", {name: "USD", amount: "10000", username: u.username, secret_key: "clock50boisonly"})
           .then(res => {
             console.log(res.data);
           });

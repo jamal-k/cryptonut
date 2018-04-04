@@ -24,7 +24,7 @@ class SelectedChallengeContainer extends React.Component {
   }
 
   startChallenge(name){
-    axios.post("http://localhost:3000/challenge", {username: getCookie("username"), name: name})
+    axios.post("http://localhost:5000/challenge", {username: getCookie("username"), name: name})
       .then(res => {
         if(res.data.msg == "200"){
           alerty.alert("The " + name + " challenge has been accepted! Check your wallet for any wallets you are suppose to receive and start trading!", {title: "Challenge Started"});

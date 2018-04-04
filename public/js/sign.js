@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  axios.get("http://localhost:3000/user/checkauth")
+  axios.get("http://localhost:5000/user/checkauth")
     .then(res => {
       if(res.data == "auth"){
         var username = getCookie("username");
@@ -23,7 +23,7 @@ $("#register_btn").click(() =>{
   if(email != "" && username != "" && password != ""){
     if(validateEmail(email)){
 
-      axios.post("http://localhost:3000/user", {email: email, username: username, password: password})
+      axios.post("http://localhost:5000/user", {email: email, username: username, password: password})
         .then(res => {
 
           console.log("res: ", res);
@@ -58,7 +58,7 @@ $("#login_btn").on("click", () => {
   password = $("#login_password")[0].value;
 
   if(username != "" && password != ""){
-    axios.post("http://localhost:3000/user/login", {username: username, password: password})
+    axios.post("http://localhost:5000/user/login", {username: username, password: password})
       .then(res => {
         if(res.data.msg == "200: login success"){
           document.cookie = "username=" + res.data.username;
@@ -75,7 +75,7 @@ $("#login_btn").on("click", () => {
 
 $("#logout_btn").on("click", () =>{
 
-  axios.get("http://localhost:3000/user/logout")
+  axios.get("http://localhost:5000/user/logout")
     .then(res => {
       console.log(res);
       if(res.data.msg == "200: logout success"){

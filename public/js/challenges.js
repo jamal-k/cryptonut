@@ -46,7 +46,7 @@ class ChallengeContainer extends React.Component {
 
   /* Get the given user's wallets */
   refreshChallenges() {
-    axios.get("http://localhost:3000/challenge").then(res => {
+    axios.get("http://localhost:5000/challenge").then(res => {
       if (res.status == 200) {
         this.setState({
           challenges: res.data
@@ -74,7 +74,7 @@ class ChallengeContainer extends React.Component {
     /** END **/
 
     /* Get the selected challenge and display it in the container */
-    axios.get("http://localhost:3000/challenge/" + name).then(res => {
+    axios.get("http://localhost:5000/challenge/" + name).then(res => {
       if (res.status == 200) {
         console.log("r", res.data);
         ReactDOM.render(React.createElement(SelectedChallengeContainer, { challenges: res.data,

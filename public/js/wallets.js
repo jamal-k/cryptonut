@@ -73,7 +73,7 @@ class WalletContainer extends React.Component {
       return;
     }
 
-    axios.get("http://localhost:3000/wallet/" + username).then(res => {
+    axios.get("http://localhost:5000/wallet/" + username).then(res => {
       if (res.status == 200) {
         this.setState({
           wallets: res.data

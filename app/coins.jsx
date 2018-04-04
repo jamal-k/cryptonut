@@ -114,7 +114,7 @@ class SelectOptionsCoins extends React.Component {
       return;
     }
 
-    axios.get("http://localhost:3000/extension/coins/" + getCookie("username"))
+    axios.get("http://localhost:5000/extension/coins/" + getCookie("username"))
       .then(res => {
 
         this.setState({
@@ -128,7 +128,7 @@ class SelectOptionsCoins extends React.Component {
         console.log(err.response);
       });
 
-    axios.get("http://localhost:3000/wallet/" + getCookie("username"))
+    axios.get("http://localhost:5000/wallet/" + getCookie("username"))
       .then(res => {
         this.setState({
           my_coins: res.data,
