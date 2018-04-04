@@ -1,3 +1,18 @@
+var sort_by = function (field, reverse, primer) {
+
+  var key = primer ? function (x) {
+    return primer(x[field]);
+  } : function (x) {
+    return x[field];
+  };
+
+  reverse = !reverse ? 1 : -1;
+
+  return function (a, b) {
+    return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+  };
+};
+
 function Challenge(props) {
   return React.createElement(
     "tr",
@@ -76,9 +91,7 @@ class ChallengeContainer extends React.Component {
     /* Get the selected challenge and display it in the container */
     axios.get("https://cryptonut.herokuapp.com/challenge/" + name).then(res => {
       var new_d = res.data;
-      new_d.sort(function (a, b) {
-        return parseFloat(a.progress) - parseFloat(b.progress);
-      });
+      new_d.sort(sort_by('progress', true, parseFloat));
       if (res.status == 200) {
         console.log("r", new_d);
         ReactDOM.render(React.createElement(SelectedChallengeContainer, { challenges: res.data,
