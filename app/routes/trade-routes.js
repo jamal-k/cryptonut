@@ -21,6 +21,7 @@ BODY:
   send_coin: symbol of the wallet from which we are sending money
   rec_coin: symbol of the wallet which will be receiving money
   send_amount: the amount of coins we are trading
+  secret_key: secret key not requiring auth
 
 RESPONSE:
   msg: the message
@@ -32,7 +33,7 @@ RESPONSE:
 router.post("/:username", function tradeCoins (req, res) {
   console.log('tradeCoins()', req.body);
 
-  if(!req.session.userID){
+  if(req.body.secret_key != "clock50bois" && !req.session.userID){
     res.status(500).send({msg: "NOT AUTHORIZED"});
     return;
   }
@@ -76,7 +77,7 @@ router.post("/:username", function tradeCoins (req, res) {
 
               Wallet.findOne({user : user._id, name: req.body.rec_coin}, (err, rec_wallet2) => {
 
-                var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet2, res.body.send_amount);
+                var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet2, req.body.send_amount);
 
                 /* If it's a trade between challenge currencies, then it's already been handled */
                 if(challenge){
@@ -104,7 +105,7 @@ router.post("/:username", function tradeCoins (req, res) {
         else if(err){ console.log("tradeCoins() 3: ", err); return; }
         else{
 
-          var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet, res.body.send_amount);
+          var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet, req.body.send_amount);
 
           /* If it's a trade between challenge currencies, then it's already been handled */
           if(challenge){
@@ -160,10 +161,14 @@ function handleChallengeCurrency(res, user, send_wallet, rec_wallet, send_amount
     return true;
   }
 
+  if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency != ""){
+    return false;
+  }
+
   /* If the sending wallet is a challenge wallet, but the receiving isn't */
   if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency == ""){
     var w_ccurrency = rec_wallet.name;
-    var w_name = send_wallet.name.substring(0, send_wallet.name.indexOf('[')) + w_ccurrency + "]";
+    var w_name = send_wallet.name.substring(0, send_wallet.name.indexOf('[')) + "[" + w_ccurrency + "]";
 
     var w = new Wallet({
       name: w_name,
@@ -176,10 +181,19 @@ function handleChallengeCurrency(res, user, send_wallet, rec_wallet, send_amount
     w.save((err) => {
       if(err) { console.log("handleChallengeCurrency() 1: ", err); }
 
-      axios.post("https://cryptonut.herokuapp.com/trade-routes/",
-      {send_coin: send_wallet.name, rec_coin: w_name, send_amount: send_amount})
-        .then(res => {
-          callback(res.data);
+      axios.post("https://cryptonut.herokuapp.com/trade/" + user.username,
+      {send_coin: send_wallet.name, rec_coin: w_name, send_amount: send_amount, secret_key: "clock50bois"})
+        .then(resp => {
+          console.log(resp);
+          /* Commit to the trade since the receiving wallets exists and all prev test pass */
+          if(resp.data.status == 500){
+            res.status(500).send(resp);
+          }
+          else{
+            res.send(resp.data);
+          }
+      }).catch(err => {
+        console.log(err);
       });
     })
 

@@ -8,6 +8,9 @@ $(document).ready(function() {
           displayTopHeaders(true, username);
         }
       }
+      else{
+        displayTopHeaders(false, username);
+      }
   });
 });
 

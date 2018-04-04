@@ -1137,9 +1137,9 @@ ul a, ul a:focus, ul a:hover {
 
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
+/* ::-webkit-scrollbar {
+  display: block;
+} */
 
 .home_container {
 
