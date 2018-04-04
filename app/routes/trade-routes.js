@@ -119,7 +119,7 @@ router.post("/:username", function tradeCoins (req, res) {
             return;
           }
 
-          /* Commit to the trade since the receiving wallet exists and all prev test pass */
+          /* Commit to the trade since the receiving wallets exists and all prev test pass */
           commitTrade(user.username, send_wallet, rec_wallet, req.body.send_amount, (trade_resp) => {
             if(trade_resp.status == 500){
               res.status(500).send(trade_resp);
