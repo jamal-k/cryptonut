@@ -9,8 +9,8 @@
     "wallets_jsx": "./node_modules/.bin/babel app/wallets.jsx > public/js/wallets.js",
     "trade_transactions_jsx": "./node_modules/.bin/babel app/trade-transactions.jsx > public/js/trade-transactions.js",
     "achievements_jsx": "./node_modules/.bin/babel app/achievements.jsx > public/js/achievements.js",
-	"challenges_jsx": "./node_modules/.bin/babel app/challenges.jsx > public/js/challenges.js",
-	"selected-challenge_jsx": "./node_modules/.bin/babel app/selected-challenge.jsx > public/js/selected-challenge.js",
+    "challenges_jsx": "./node_modules/.bin/babel app/challenges.jsx > public/js/challenges.js",
+    "selected-challenge_jsx": "./node_modules/.bin/babel app/selected-challenge.jsx > public/js/selected-challenge.js",
     "react": "npm run coins_jsx | npm run headers_jsx | npm run wallets_jsx  | npm run trade_transactions_jsx | npm run achievements_jsx | npm run challenges_jsx | npm run selected-challenge_jsx",
     "server": "node server.js"
   },

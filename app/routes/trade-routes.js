@@ -97,9 +97,10 @@ router.post("/:username", function tradeCoins (req, res) {
         else if(err){ console.log("tradeCoins() 3: ", err); return; }
         else{
 
-          /* If both wallets are challenge wallets, then they cannot be traded */
-          if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency != ""){
-            res.status(500).send({msg: "You cannot trade between challenge wallets."});
+          var challenge = handleChallengeCurrency(res, user, send_wallet, rec_wallet, rec.body.send_amount);
+
+          /* If it's a trade between challenge currencies, then it's already been handled */
+          if(challenge){
             return;
           }
 
@@ -130,6 +131,56 @@ router.post("/:username", function tradeCoins (req, res) {
   });
 
 });
+
+function handleChallengeCurrency(res, user, send_wallet, rec_wallet, send_amount){
+
+  /* If neither wallets are challenge currencies, then don't handle */
+  if(send_wallet.challenge_currency == "" && rec_wallet.challenge_currency == ""){
+    return false;
+  }
+
+  /* If sending wallet is not challenge and receiving is a challenge */
+  if(send_wallet.challenge_currency == "" && rec_wallet.challenge_currency != ""){
+    res.status(500).send({msg: "You cannot send coins to a challenge wallet from a non-challenge wallet."});
+    return true;
+  }
+
+  /* If both are challenge wallets, but not the same challenges */
+  if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency != "" &&
+    send_wallet.name.substring(0, send_wallet.name.indexOf('[')) !=
+    rec_wallet.name.substring(0, rec_wallet.name.indexOf('['))){
+    res.status(500).send({msg: "You cannot trade coins between different challenges"});
+    return true;
+  }
+
+  /* If the sending wallet is a challenge wallet, but the receiving isn't */
+  if(send_wallet.challenge_currency != "" && rec_wallet.challenge_currency == ""){
+    var w_ccurrency = rec_wallet.name;
+    var w_name = send_wallet.name.substring(0, send_wallet.name.indexOf('[')) + w_ccurrency + "]";
+
+    var w = new Wallet({
+      name: w_name,
+      amount: 0,
+      user: user._id,
+      challenge_currency: w_ccurrency
+    });
+
+
+    w.save((err) => {
+      if(err) { console.log("handleChallengeCurrency() 1: ", err); }
+
+      axios.post("https://cryptonut.herokuapp.com/trade-routes/",
+      {send_coin: send_wallet.name, rec_coin: w_name, send_amount: send_amount})
+        .then(res => {
+          callback(res.data);
+      });
+    })
+
+    return true;
+  }
+
+
+}
 
 function createEmptyWallet(username, name, callback){
   axios.post("https://cryptonut.herokuapp.com/wallet/", {name: name, amount: 0, username: username, secret_key: "clock50boisonly"})
