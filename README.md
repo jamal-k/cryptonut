@@ -10,17 +10,20 @@ Users can open a simulated trading account to purchase and trade various cryptoc
 
 The Cryptocurrency Market Capitalizations API will be used to acquire and update market data, including prices for numerous cryptocurrencies. Additional information such as volume and historical prices will also be provided for market analytics. Market data received from the API will be displayed to users in a form that allows for easy comparison between prices, to assist investment decisions.
 
+# Online Usage
+
+    https://cryptonut.herokuapp.com
+
 # Local Usage
 
-Start mongodb server:
+1) Install heroku CLI
+    https://devcenter.heroku.com/articles/heroku-cli
+    
+2) Start local web app
+    heroku local web
 
-    ./mongod --port 3001
-
-Start nodejs server:
-
-    node server.js
-
-Access URL: http://localhost:3000
+3) Access URL 
+    http://localhost:5000
 
 # API Use
 
