@@ -1,8 +1,8 @@
 # Team
 
-- Hamza Yousaf | yousafh1
-- Shahmir Ali | alishah
-- Jamal Khan | khanjam9
+- Hamza Yousaf
+- Shahmir Ali
+- Jamal Khan
 
 # Project Outline
 
